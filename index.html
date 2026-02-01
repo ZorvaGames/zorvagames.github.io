@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZorvaGames - Advanced Platform</title>
+    <title>ZorvaGames - Government System</title>
     
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://images.unsplash.com; frame-src 'self';">
-    
     <meta name="google-site-verification" content="CZ4HB0wl83PJNnk7KpUVhwCcmTqqy8CaMxF-EO0qCQA" />
 
     <style>
         :root {
-            --primary: #6c5ce7; /* Purple */
+            --primary: #6c5ce7;
             --dark: #121212;
             --panel: #1e1e1e;
-            --admin-red: #ff4757;
-            --dev-blue: #00d2d3;
-            --text-gray: #a4b0be;
+            --gold: #ffd700;   /* Level 1 */
+            --orange: #ff9f43; /* Level 2 */
+            --green: #2ecc71;  /* Level 3 */
+            --red: #ff4757;    /* Alerts */
         }
 
         body {
@@ -29,50 +29,45 @@
             overflow: hidden;
         }
 
-        /* --- SIDEBAR --- */
+        /* --- SIDEBAR & CHATS --- */
         .sidebar {
-            width: 260px;
+            width: 300px;
             background-color: var(--panel);
             display: flex;
             flex-direction: column;
             border-right: 1px solid #333;
         }
 
-        .logo {
-            font-size: 24px;
-            font-weight: 900;
-            padding: 20px;
-            color: white;
-            text-transform: uppercase;
-            border-bottom: 1px solid #333;
+        .chat-tabs {
+            display: flex;
+            background: #000;
         }
-        .logo span { color: var(--primary); }
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            color: #666;
+            border-bottom: 2px solid transparent;
+        }
+        .tab.active { color: white; border-bottom: 2px solid var(--primary); }
+        .tab.staff-only { color: var(--gold); }
 
-        /* Admin Chat Box in Sidebar */
-        .admin-chat-box {
+        .chat-window {
             flex: 1;
             padding: 15px;
             overflow-y: auto;
-            border-bottom: 1px solid #333;
+            display: none; /* Hidden until tab clicked */
         }
-        .chat-title { font-size: 12px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
-        .chat-msg { font-size: 13px; margin-bottom: 8px; line-height: 1.4; }
-        .msg-admin { color: var(--admin-red); font-weight: bold; }
-        
-        .admin-input-area {
-            padding: 10px;
-            display: none; /* Hidden for users */
-        }
-        .chat-input {
-            width: 90%;
-            background: #000;
-            border: 1px solid #444;
-            color: white;
-            padding: 8px;
-            border-radius: 4px;
-        }
+        .chat-window.active { display: block; }
 
-        /* --- MAIN CONTENT --- */
+        .chat-msg { font-size: 13px; margin-bottom: 8px; line-height: 1.4; }
+        .msg-sys { color: #888; font-style: italic; }
+        .msg-staff { color: var(--gold); }
+
+        /* --- MAIN AREA --- */
         .main-content {
             flex: 1;
             display: flex;
@@ -80,7 +75,6 @@
             overflow-y: auto;
         }
 
-        /* Top Navigation Bar */
         .top-nav {
             height: 60px;
             background-color: var(--panel);
@@ -91,89 +85,66 @@
             border-bottom: 1px solid #333;
         }
 
-        .search-bar {
-            background: #000;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 20px;
-            color: white;
-            width: 300px;
+        /* DASHBOARD PANELS */
+        .dashboard-grid {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
 
-        .user-controls {
+        .panel-box {
+            background: #2d2d2d;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #444;
+        }
+        .lvl1-box { border-color: var(--gold); display: none; } /* Hidden for non-owners */
+
+        .request-item {
+            background: #111;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--red);
+            font-size: 13px;
+        }
+        
+        /* STAFF LIST */
+        .staff-row {
             display: flex;
-            gap: 15px;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #333;
             align-items: center;
         }
-
-        .btn {
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
+        .kick-btn {
+            background: var(--red);
             border: none;
-            transition: 0.2s;
-        }
-        .btn-login { background-color: var(--primary); color: white; }
-        .btn-upload { 
-            background-color: var(--dev-blue); 
-            color: black; 
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
             display: none; /* Hidden by default */
         }
-        .btn-upload:hover { box-shadow: 0 0 10px var(--dev-blue); }
 
-        /* Game Area */
-        .game-container {
-            padding: 30px;
-        }
-
-        .featured-game {
-            background: black;
-            width: 100%;
-            height: 500px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #333;
-        }
-
-        /* Comments Section */
-        .comments-section {
-            margin-top: 20px;
-            background: var(--panel);
-            padding: 20px;
-            border-radius: 12px;
-        }
-        .comment {
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #333;
-        }
-        .username { font-weight: bold; margin-right: 10px; }
-        
-        /* Dynamic Colors */
-        .u-admin { color: var(--admin-red); }
-        .u-dev { color: var(--dev-blue); }
-        .u-user { color: white; }
-
-        /* MODALS (Popups) */
+        /* MODALS */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.9);
             justify-content: center;
             align-items: center;
-            z-index: 100;
+            z-index: 200;
         }
         .modal-content {
             background: var(--panel);
             padding: 30px;
             border-radius: 10px;
-            width: 300px;
+            width: 400px;
             text-align: center;
-            border: 1px solid #444;
+            border: 1px solid #555;
         }
         .modal-input {
             width: 90%;
@@ -184,185 +155,308 @@
             color: white;
             border-radius: 5px;
         }
+        
+        .dual-btn-container { display: flex; gap: 10px; justify-content: center; margin-top: 15px; }
+        .btn { padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; font-weight: bold; }
+        .btn-code { background: var(--primary); color: white; }
+        .btn-perm { background: var(--orange); color: black; }
 
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <div class="logo">ZORVA<span>GAMES</span></div>
-        
-        <div class="admin-chat-box" id="announcementBox">
-            <div class="chat-title">📢 Admin Announcements</div>
-            <div class="chat-msg"><span class="msg-admin">ZorvaGames:</span> Welcome to the Beta!</div>
-            <div class="chat-msg"><span class="msg-admin">ZorvaGames:</span> Dev applications are OPEN.</div>
+        <div style="padding: 20px; font-weight:900; font-size:20px; border-bottom:1px solid #333;">
+            ZORVA<span style="color:var(--primary)">GAMES</span>
         </div>
 
-        <div class="admin-input-area" id="adminInput">
-            <input type="text" class="chat-input" id="adminMsg" placeholder="Post announcement..." onkeypress="handleAdminChat(event)">
+        <div class="chat-tabs">
+            <div class="tab active" onclick="switchChat('global')">Global 📢</div>
+            <div class="tab staff-only" id="staffTab" style="display:none;" onclick="switchChat('staff')">Staff 🔒</div>
+        </div>
+
+        <div class="chat-window active" id="globalChat">
+            <div class="chat-msg"><span class="msg-sys">System:</span> Welcome to ZorvaGames.</div>
+            <div class="chat-msg"><span class="msg-staff">Admin:</span> Recruitment is OPEN! Apply now.</div>
+        </div>
+
+        <div class="chat-window" id="staffChat">
+            <div class="chat-msg"><span class="msg-sys">System:</span> Secure Line. Encrypted.</div>
+        </div>
+
+        <div style="padding: 10px; border-top:1px solid #333; display:none;" id="chatInputArea">
+            <input type="text" class="modal-input" id="chatMsg" placeholder="Broadcast..." onkeypress="sendChat(event)">
         </div>
     </div>
 
     <div class="main-content">
-        
         <div class="top-nav">
-            <input type="text" class="search-bar" placeholder="Search games...">
+            <b>Management Console</b>
+            <div>
+                <button class="btn" style="background:var(--primary); color:white;" id="applyBtn" onclick="openModal('recruitModal')">Apply for Staff</button>
+                <button class="btn" style="background:#333; color:white;" id="loginBtn" onclick="openModal('loginModal')">Login</button>
+                <span id="userDisplay" style="display:none; font-weight:bold; color:var(--gold);">Owner</span>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
             
-            <div class="user-controls">
-                <button class="btn btn-upload" id="uploadBtn" onclick="openUploadModal()">+ Upload Game</button>
-                
-                <button class="btn btn-login" id="loginBtn" onclick="openLogin()">Login</button>
-                <span id="userInfo" style="display:none; font-weight:bold;">Guest</span>
-            </div>
-        </div>
-
-        <div class="game-container">
-            <div class="featured-game">
-                <iframe src="" style="width:100%; height:100%; border:none;" id="gameFrame"></iframe>
-            </div>
-
-            <div class="comments-section">
-                <h3>Comments</h3>
-                <div id="commentsList">
-                    <div class="comment">
-                        <span class="username u-dev">NeoByte</span> <span style="color:#666; font-size:12px;">(Developer)</span><br>
-                        Hope you guys like the tank update!
-                    </div>
-                    <div class="comment">
-                        <span class="username u-user">Player123</span><br>
-                        This game is awesome!
-                    </div>
-                </div>
-                
-                <div style="margin-top: 15px;">
-                    <input type="text" id="commentInput" class="modal-input" placeholder="Write a comment..." style="width: 70%; display:inline-block;">
-                    <button class="btn btn-login" onclick="postComment()">Post</button>
+            <div class="panel-box lvl1-box" id="inboxPanel">
+                <h3 style="color:var(--gold); margin-top:0;">📨 Owner Inbox (Kick Requests)</h3>
+                <div id="requestList">
+                    <div style="color:#666; font-style:italic;">No pending requests.</div>
                 </div>
             </div>
-        </div>
 
+            <div class="panel-box lvl1-box" id="codePanel">
+                <h3 style="color:var(--gold); margin-top:0;">🔑 Code Generator</h3>
+                <p style="font-size:12px;">Generate a one-time code for Level 2/3 to kick admins.</p>
+                <button class="btn" style="background:var(--gold); color:black;" onclick="genCode()">Generate Code</button>
+                <h2 id="codeDisplay" style="font-family:monospace; color:var(--gold); letter-spacing:3px;"></h2>
+            </div>
+
+            <div class="panel-box" style="grid-column: span 2;">
+                <h3>Active Staff & Users</h3>
+                <div id="userList">
+                    <div class="staff-row">
+                        <span><b style="color:var(--gold)">👑 OWNER</b> (You)</span>
+                    </div>
+                    <div class="staff-row">
+                        <span><b style="color:var(--orange)">⚔️ Commander</b> (Level 2)</span>
+                        <button class="kick-btn" onclick="initiateKick('admin', 'Commander')">KICK</button>
+                    </div>
+                    <div class="staff-row">
+                        <span><b style="color:var(--green)">🛡️ Moderator</b> (Level 3)</span>
+                        <button class="kick-btn" onclick="initiateKick('admin', 'Moderator')">KICK</button>
+                    </div>
+                    <div class="staff-row">
+                        <span>👤 <span style="color:#aaa">BadUser123</span></span>
+                        <button class="kick-btn" onclick="initiateKick('user', 'BadUser123')">KICK</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
     <div class="modal" id="loginModal">
         <div class="modal-content">
-            <h2>Login</h2>
-            <input type="text" id="uName" class="modal-input" placeholder="Username">
-            <input type="password" id="pWord" class="modal-input" placeholder="Password">
-            <button class="btn btn-login" onclick="attemptLogin()">Enter</button>
-            <button class="btn" onclick="closeModal('loginModal')" style="background:transparent; color:#888;">Cancel</button>
+            <h2>Staff Login</h2>
+            <input type="text" id="uName" class="modal-input" placeholder="User">
+            <input type="password" id="pWord" class="modal-input" placeholder="Pass">
+            <button class="btn" style="background:white; color:black;" onclick="login()">Login</button>
+            <button class="btn" style="background:none; color:#888;" onclick="closeModal('loginModal')">Close</button>
         </div>
     </div>
 
-    <div class="modal" id="uploadModal">
+    <div class="modal" id="kickMethodModal">
         <div class="modal-content">
-            <h2 style="color: var(--dev-blue);">Developer Upload</h2>
-            <p style="font-size:12px; color:#aaa;">Upload your game files (.zip) for review.</p>
-            <input type="text" class="modal-input" placeholder="Game Name">
-            <input type="file" class="modal-input">
-            <button class="btn btn-upload" onclick="submitGame()">Submit for Review</button>
-            <button class="btn" onclick="closeModal('uploadModal')" style="background:transparent; color:#888;">Cancel</button>
+            <h2 style="color:var(--red);">⚠️ KICKING AN ADMIN</h2>
+            <p>You are targeting a fellow Admin. Authorization required.</p>
+            <div class="dual-btn-container">
+                <button class="btn btn-code" onclick="openModal('codeKickModal'); closeModal('kickMethodModal')">I Have a Code</button>
+                <button class="btn btn-perm" onclick="openModal('permKickModal'); closeModal('kickMethodModal')">Ask Permission</button>
+            </div>
+            <br>
+            <button class="btn" style="background:none; color:#888;" onclick="closeModal('kickMethodModal')">Cancel</button>
+        </div>
+    </div>
+
+    <div class="modal" id="codeKickModal">
+        <div class="modal-content">
+            <h3>Enter Authorization Code</h3>
+            <input type="text" id="kickCodeInput" class="modal-input" placeholder="XXXX-XXXX">
+            <button class="btn btn-code" onclick="processCodeKick()">FIRE!</button>
+            <button class="btn" style="background:none; color:#888;" onclick="closeModal('codeKickModal')">Cancel</button>
+        </div>
+    </div>
+
+    <div class="modal" id="permKickModal">
+        <div class="modal-content">
+            <h3>Request Permission</h3>
+            <p>The Owner will receive this request.</p>
+            <input type="text" id="kickReason" class="modal-input" placeholder="Reason (e.g. Abuse of power)">
+            <button class="btn btn-perm" onclick="sendPermissionRequest()">Send Request</button>
+            <button class="btn" style="background:none; color:#888;" onclick="closeModal('permKickModal')">Cancel</button>
+        </div>
+    </div>
+
+    <div class="modal" id="recruitModal">
+        <div class="modal-content">
+            <h3>Apply for Staff</h3>
+            <input type="text" class="modal-input" placeholder="Your Username">
+            <input type="text" class="modal-input" placeholder="Why should we hire you?">
+            <button class="btn" style="background:var(--primary); color:white;" onclick="alert('Application Sent!'); closeModal('recruitModal')">Submit</button>
+            <button class="btn" style="background:none; color:#888;" onclick="closeModal('recruitModal')">Close</button>
         </div>
     </div>
 
     <script>
-        let currentUserRole = 'user'; // 'user', 'dev', 'admin'
-        let currentUserName = 'Guest';
+        // SYSTEM STATE
+        let myLevel = 0; // 1=Owner, 2=Commander, 3=Mod
+        let activeTarget = "";
+        let generatedCode = "";
+        let requests = []; // Stores pending kick requests
 
-        // 1. LOGIN SYSTEM (Simulation)
-        function openLogin() { document.getElementById('loginModal').style.display = 'flex'; }
+        // --- 1. LOGIN & UI ---
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        function attemptLogin() {
+        function login() {
             const u = document.getElementById('uName').value;
             const p = document.getElementById('pWord').value;
 
-            // --- ADMIN CREDENTIALS ---
-            if (u === 'admin' && p === 'zorva') {
-                setSession('ZorvaGames', 'admin');
-            } 
-            // --- DEV CREDENTIALS ---
-            else if (u === 'dev' && p === '1234') {
-                setSession('DevUser', 'dev');
-            } 
-            // --- NORMAL USER ---
-            else {
-                setSession(u || 'User', 'user');
-            }
+            if (u === 'owner' && p === 'zorva') setLevel(1);
+            else if (u === 'commander' && p === '1234') setLevel(2);
+            else if (u === 'mod' && p === '1234') setLevel(3);
+            else alert("Invalid Credentials");
+
             closeModal('loginModal');
         }
 
-        function setSession(name, role) {
-            currentUserName = name;
-            currentUserRole = role;
+        function setLevel(lvl) {
+            myLevel = lvl;
+            document.getElementById('loginBtn').style.display = 'none';
+            document.getElementById('applyBtn').style.display = 'none';
+            document.getElementById('userDisplay').style.display = 'block';
+            document.getElementById('staffTab').style.display = 'block'; // Show private chat tab
+            document.getElementById('chatInputArea').style.display = 'block'; // Allow typing
 
-            // UI Updates
-            const loginBtn = document.getElementById('loginBtn');
-            const userInfo = document.getElementById('userInfo');
-            const uploadBtn = document.getElementById('uploadBtn');
-            const adminInput = document.getElementById('adminInput');
+            // Show Kick Buttons
+            document.querySelectorAll('.kick-btn').forEach(b => b.style.display = 'block');
 
-            loginBtn.style.display = 'none';
-            userInfo.style.display = 'block';
-            userInfo.innerText = name;
-
-            // Reset UI
-            uploadBtn.style.display = 'none';
-            adminInput.style.display = 'none';
-            userInfo.className = ''; // Remove old color
-
-            // Apply Powers
-            if (role === 'admin') {
-                userInfo.classList.add('u-admin');
-                adminInput.style.display = 'block'; // Show Chat Input
-            } else if (role === 'dev') {
-                userInfo.classList.add('u-dev');
-                uploadBtn.style.display = 'block'; // Show Upload Button
+            if (lvl === 1) {
+                document.getElementById('userDisplay').innerText = "👑 OWNER";
+                document.querySelectorAll('.lvl1-box').forEach(b => b.style.display = 'block');
+                renderRequests(); // Show inbox
+            } else if (lvl === 2) {
+                document.getElementById('userDisplay').innerText = "⚔️ COMMANDER";
+                document.getElementById('userDisplay').style.color = "var(--orange)";
             } else {
-                userInfo.classList.add('u-user');
+                document.getElementById('userDisplay').innerText = "🛡️ MOD";
+                document.getElementById('userDisplay').style.color = "var(--green)";
             }
         }
 
-        // 2. ADMIN CHAT SYSTEM
-        function handleAdminChat(e) {
-            if (e.key === 'Enter') {
-                const text = document.getElementById('adminMsg').value;
-                if (!text) return;
-                
-                const box = document.getElementById('announcementBox');
-                const newMsg = document.createElement('div');
-                newMsg.classList.add('chat-msg');
-                newMsg.innerHTML = `<span class="msg-admin">${currentUserName}:</span> ${text}`;
-                box.appendChild(newMsg);
-                
-                document.getElementById('adminMsg').value = ''; // Clear input
+        // --- 2. KICK FLOW LOGIC ---
+        function initiateKick(type, name) {
+            activeTarget = name;
+
+            // If kicking a USER -> Instant Kick
+            if (type === 'user') {
+                if(confirm("Kick user " + name + "?")) alert(name + " kicked!");
+                return;
+            }
+
+            // If kicking an ADMIN
+            if (myLevel === 1) {
+                // Owner kicks instantly
+                alert("OWNER POWER: " + name + " has been removed.");
+            } else {
+                // Levels 2 & 3 need authorization
+                openModal('kickMethodModal');
             }
         }
 
-        // 3. COMMENT SYSTEM
-        function postComment() {
-            const text = document.getElementById('commentInput').value;
-            if (!text) return alert("Write something first!");
+        // OPTION A: Code Kick
+        function genCode() {
+            generatedCode = "ZOR-" + Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('codeDisplay').innerText = generatedCode;
+        }
 
-            const list = document.getElementById('commentsList');
-            const div = document.createElement('div');
-            div.classList.add('comment');
+        function processCodeKick() {
+            const input = document.getElementById('kickCodeInput').value;
+            if (input === generatedCode && generatedCode !== "") {
+                alert("✅ CODE VALID. " + activeTarget + " has been kicked.");
+                generatedCode = ""; // Burn code
+                closeModal('codeKickModal');
+            } else {
+                alert("❌ INVALID CODE");
+            }
+        }
 
-            // Determine Color
-            let colorClass = 'u-user';
-            if (currentUserRole === 'admin') colorClass = 'u-admin';
-            if (currentUserRole === 'dev') colorClass = 'u-dev';
+        // OPTION B: Permission Request
+        function sendPermissionRequest() {
+            const reason = document.getElementById('kickReason').value;
+            requests.push({ target: activeTarget, reason: reason, from: (myLevel === 2 ? "Commander" : "Mod") });
+            alert("📨 Request sent to Owner Inbox.");
+            closeModal('permKickModal');
+            renderRequests(); // Update simulation
+        }
 
-            div.innerHTML = `<span class="username ${colorClass}">${currentUserName}</span><br>${text}`;
-            list.appendChild(div);
+        // --- 3. OWNER INBOX LOGIC ---
+        function renderRequests() {
+            const list = document.getElementById('requestList');
+            if (requests.length === 0) {
+                list.innerHTML = '<div style="color:#666;">No pending requests.</div>';
+                return;
+            }
             
-            document.getElementById('commentInput').value = '';
+            list.innerHTML = ""; // Clear
+            requests.forEach((req, index) => {
+                const item = document.createElement('div');
+                item.className = 'request-item';
+                item.innerHTML = `
+                    <div style="color:var(--gold)">Request from: ${req.from}</div>
+                    <div>Target: <b>${req.target}</b></div>
+                    <div>Reason: "${req.reason}"</div>
+                    <div style="margin-top:5px;">
+                        <button class="btn" style="padding:4px 8px; font-size:10px; background:var(--green); color:black;" onclick="approveReq(${index})">APPROVE</button>
+                        <button class="btn" style="padding:4px 8px; font-size:10px; background:var(--red); color:white;" onclick="denyReq(${index})">DENY</button>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
         }
 
-        // 4. UPLOAD SYSTEM (Mock)
-        function openUploadModal() { document.getElementById('uploadModal').style.display = 'flex'; }
-        function submitGame() {
-            alert("Application Sent! Admin will review your game.");
-            closeModal('uploadModal');
+        function approveReq(index) {
+            alert("✅ APPROVED. " + requests[index].target + " has been kicked.");
+            requests.splice(index, 1);
+            renderRequests();
+        }
+
+        function denyReq(index) {
+            alert("🚫 DENIED.");
+            requests.splice(index, 1);
+            renderRequests();
+        }
+
+        // --- 4. CHAT LOGIC ---
+        let activeChat = 'global';
+        function switchChat(type) {
+            activeChat = type;
+            document.querySelectorAll('.chat-window').forEach(w => w.style.display = 'none');
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            
+            if (type === 'global') {
+                document.getElementById('globalChat').style.display = 'block';
+                document.querySelectorAll('.tab')[0].classList.add('active');
+            } else {
+                document.getElementById('staffChat').style.display = 'block';
+                document.getElementById('staffTab').classList.add('active');
+            }
+        }
+
+        function sendChat(e) {
+            if (e.key === 'Enter') {
+                const input = document.getElementById('chatMsg');
+                const text = input.value;
+                if(!text) return;
+
+                const boxID = activeChat === 'global' ? 'globalChat' : 'staffChat';
+                const box = document.getElementById(boxID);
+                
+                const msg = document.createElement('div');
+                msg.className = 'chat-msg';
+                
+                // Color formatting
+                let prefix = myLevel === 1 ? "👑 Owner" : (myLevel === 2 ? "⚔️ Cmdr" : "🛡️ Mod");
+                let color = myLevel === 1 ? "var(--gold)" : (myLevel === 2 ? "var(--orange)" : "var(--green)");
+
+                msg.innerHTML = `<span style="color:${color}; font-weight:bold;">${prefix}:</span> ${text}`;
+                box.appendChild(msg);
+                input.value = "";
+            }
         }
 
     </script>
