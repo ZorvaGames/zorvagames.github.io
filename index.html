@@ -10,10 +10,12 @@
 
     <style>
         :root {
-            --primary: #6c5ce7; /* Purple Brand */
-            --dark: #0f0f0f;    /* Very Dark BG */
-            --panel: #181818;   /* Game Cards */
-            --gold: #ffd700;    /* Admin */
+            --primary: #6c5ce7;
+            --dark: #0f0f0f;
+            --panel: #181818;
+            --gold: #ffd700;
+            --red: #ff4757;
+            --dev: #00d2d3;
         }
 
         body {
@@ -26,9 +28,9 @@
             overflow: hidden;
         }
 
-        /* --- SIDEBAR (Like CrazyGames) --- */
+        /* --- SIDEBAR --- */
         .sidebar {
-            width: 240px;
+            width: 250px;
             background-color: var(--panel);
             display: flex;
             flex-direction: column;
@@ -40,24 +42,23 @@
             font-weight: 900;
             padding: 20px;
             color: white;
-            text-transform: uppercase;
-            letter-spacing: 1px;
             cursor: pointer;
+            text-transform: uppercase;
         }
         .logo span { color: var(--primary); }
 
-        .menu-item {
-            padding: 12px 20px;
-            color: #aaa;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.2s;
+        .menu-item { padding: 12px 20px; color: #aaa; cursor: pointer; font-weight: 600; transition:0.2s; }
+        .menu-item:hover, .menu-item.active { background: #222; color: white; border-left: 4px solid var(--primary); }
+
+        /* PUBLIC NEWS BOX (Sidebar) */
+        .news-box {
+            margin-top: auto; /* Push to bottom */
+            padding: 15px;
+            background: #111;
+            border-top: 1px solid #333;
         }
-        .menu-item:hover, .menu-item.active {
-            background-color: #222;
-            color: white;
-            border-left: 4px solid var(--primary);
-        }
+        .news-title { font-size: 12px; color: var(--primary); font-weight: bold; margin-bottom: 8px; }
+        .news-item { font-size: 11px; margin-bottom: 5px; color: #ccc; border-left: 2px solid var(--gold); padding-left: 5px; }
 
         /* --- MAIN CONTENT --- */
         .main-content {
@@ -65,12 +66,11 @@
             display: flex;
             flex-direction: column;
             overflow-y: auto;
-            position: relative;
         }
 
         .top-nav {
             height: 60px;
-            background-color: var(--panel);
+            background: var(--panel);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -78,121 +78,56 @@
             border-bottom: 1px solid #222;
         }
 
-        /* SEARCH BAR */
-        .search-bar {
-            background: #000;
-            border: 1px solid #333;
-            padding: 8px 15px;
-            border-radius: 20px;
-            color: white;
-            width: 300px;
-        }
+        .search-bar { background: #000; border: 1px solid #333; padding: 8px 15px; border-radius: 20px; color: white; width: 250px; }
 
-        /* USER CONTROLS */
-        .btn { padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; border: none; font-size:12px; }
+        /* CONTROLS */
+        .btn { padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; border: none; font-size:12px; transition:0.2s; }
         .btn-login { background-color: var(--primary); color: white; }
-        .btn-staff { background-color: var(--gold); color: black; display: none; } /* Hidden by default */
-        .btn-upload { background-color: #00d2d3; color: black; display: none; } /* Hidden by default */
+        .btn-logout { background-color: var(--red); color: white; display: none; margin-left: 10px; }
+        .btn-staff { background-color: var(--gold); color: black; display: none; }
+        .btn-upload { background-color: var(--dev); color: black; display: none; }
 
-        /* --- GAME PORTAL (CrazyGames Style) --- */
+        /* --- VIEWS --- */
         .portal-view { padding: 30px; }
+        .admin-view { display: none; padding: 30px; background: #111; height: 100%; }
 
+        /* GAME GRID */
         .featured-section {
-            width: 100%;
-            height: 500px;
-            background: black;
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 40px;
-            border: 1px solid #333;
-            position: relative;
+            width: 100%; height: 400px; background: black; border-radius: 12px;
+            margin-bottom: 40px; border: 1px solid #333; position: relative;
         }
-        
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 20px;
-        }
-
-        .game-card {
-            background: var(--panel);
-            border-radius: 10px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
+        .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
+        .game-card { background: var(--panel); border-radius: 10px; overflow: hidden; cursor: pointer; transition: transform 0.2s; }
         .game-card:hover { transform: translateY(-5px); }
-        
-        .card-img {
-            height: 120px;
-            background: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-        }
+        .card-img { height: 120px; background: #333; display: flex; align-items: center; justify-content: center; font-size: 40px; }
         .card-info { padding: 10px; }
-        .card-title { font-size: 14px; font-weight: bold; display: block; }
-        .card-cat { font-size: 11px; color: #777; }
-
-        /* --- ADMIN DASHBOARD (Hidden by Default) --- */
-        .admin-view {
-            display: none; /* SECRET! */
-            padding: 30px;
-            background: #111;
-            height: 100%;
-        }
-        .admin-panel-box {
-            background: #222;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid var(--gold);
-            margin-bottom: 20px;
-        }
 
         /* MODALS */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-        }
-        .modal-content {
-            background: var(--panel);
-            padding: 30px;
-            border-radius: 10px;
-            width: 300px;
-            text-align: center;
-            border: 1px solid #444;
-        }
-        .modal-input {
-            width: 90%;
-            padding: 10px;
-            margin: 10px 0;
-            background: #000;
-            border: 1px solid #444;
-            color: white;
-            border-radius: 5px;
-        }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 999; }
+        .modal-content { background: var(--panel); padding: 30px; border-radius: 10px; width: 300px; text-align: center; border: 1px solid #444; }
+        .modal-input { width: 90%; padding: 10px; margin: 10px 0; background: #000; border: 1px solid #444; color: white; border-radius: 5px; }
 
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <div class="logo" onclick="showPortal()">ZORVA<span>GAMES</span></div>
+        <div class="logo" onclick="goHome()">ZORVA<span>GAMES</span></div>
         
         <div class="menu-item active">🏠 Home</div>
         <div class="menu-item">🔥 New</div>
         <div class="menu-item">🏆 Trending</div>
-        <hr style="border-color: #333; width: 100%; opacity: 0.3;">
         <div class="menu-item">⚔️ Action</div>
         <div class="menu-item">🏎️ Driving</div>
-        <div class="menu-item">🔫 Shooting</div>
-        <div class="menu-item">🧩 Puzzle</div>
+
+        <div class="news-box">
+            <div class="news-title">📢 ANNOUNCEMENTS</div>
+            <div id="publicNewsFeed">
+                <div class="news-item">Welcome to ZorvaGames!</div>
+                <div class="news-item">Recruitment is OPEN.</div>
+            </div>
+            <input type="text" id="adminNewsInput" placeholder="Post News..." style="width:90%; margin-top:5px; display:none; background:#000; color:var(--gold); border:1px solid var(--gold); font-size:10px; padding:4px;">
+        </div>
     </div>
 
     <div class="main-content">
@@ -200,74 +135,53 @@
         <div class="top-nav">
             <input type="text" class="search-bar" placeholder="Search games...">
             
-            <div style="display: flex; gap: 10px; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 10px;">
                 <button class="btn btn-upload" id="uploadBtn" onclick="openModal('uploadModal')">⬆ Upload Game</button>
-                
-                <button class="btn btn-staff" id="staffBtn" onclick="toggleAdminView()">⚙️ Government Panel</button>
+                <button class="btn btn-staff" id="staffBtn" onclick="toggleAdminView()">⚙️ Gov Panel</button>
                 
                 <button class="btn btn-login" id="loginBtn" onclick="openModal('loginModal')">Login</button>
-                <span id="userInfo" style="display:none; font-weight:bold; font-size:14px; margin-right:10px;">Guest</span>
+                <span id="userInfo" style="display:none; font-weight:bold; margin: 0 10px;">Guest</span>
+                <button class="btn btn-logout" id="logoutBtn" onclick="logout()">Logout</button>
             </div>
         </div>
 
         <div class="portal-view" id="portalView">
-            
             <div class="featured-section">
-                <iframe src="" style="width:100%; height:100%; border:none;" id="gameFrame"></iframe>
+                <iframe src="" style="width:100%; height:100%; border:none;" id="mainGameFrame"></iframe>
                 <div style="position: absolute; bottom: 20px; left: 20px; text-shadow: 2px 2px 4px black;">
                     <h1 style="margin: 0; font-size: 40px;">TANK DUEL</h1>
-                    <p style="margin: 0; color: #ccc;">Play Free • Multiplayer • No Download</p>
+                    <p style="margin: 0; color: #ccc;">Free Multiplayer • No Download</p>
                 </div>
             </div>
 
-            <h2 style="border-left: 4px solid var(--primary); padding-left: 15px;">Recommended Games</h2>
-            
+            <h2 style="border-left: 4px solid var(--primary); padding-left: 15px;">Trending Now</h2>
             <div class="game-grid">
-                <div class="game-card">
-                    <div class="card-img">🏎️</div>
-                    <div class="card-info">
-                        <span class="card-title">Cyber Racing</span>
-                        <span class="card-cat">Driving</span>
-                    </div>
-                </div>
-                <div class="game-card">
-                    <div class="card-img">🧟</div>
-                    <div class="card-info">
-                        <span class="card-title">Zombie Defense</span>
-                        <span class="card-cat">Action</span>
-                    </div>
-                </div>
-                <div class="game-card">
-                    <div class="card-img">🚀</div>
-                    <div class="card-info">
-                        <span class="card-title">Space Wars</span>
-                        <span class="card-cat">Shooting</span>
-                    </div>
-                </div>
-                <div class="game-card">
-                    <div class="card-img">⚽</div>
-                    <div class="card-info">
-                        <span class="card-title">Super Kicks</span>
-                        <span class="card-cat">Sports</span>
-                    </div>
-                </div>
+                <div class="game-card"><div class="card-img">🏎️</div><div class="card-info">Cyber Racer</div></div>
+                <div class="game-card"><div class="card-img">🧟</div><div class="card-info">Zombie Defense</div></div>
+                <div class="game-card"><div class="card-img">🚀</div><div class="card-info">Space Wars</div></div>
+                <div class="game-card"><div class="card-img">⚽</div><div class="card-info">Super Kicks</div></div>
             </div>
         </div>
 
         <div class="admin-view" id="adminView">
-            <h1 style="color: var(--gold);">🏛️ Government Control</h1>
+            <h1 style="color: var(--gold);">🏛️ Government Console</h1>
+            <p>Welcome, <span style="color:var(--gold)">Owner</span>. This area is restricted.</p>
             
-            <div class="admin-panel-box">
-                <h3 style="margin-top:0;">Request Inbox (Level 1 Only)</h3>
-                <div style="color: #666; font-style: italic;">No pending kick requests.</div>
-            </div>
-
-            <div class="admin-panel-box">
-                <h3 style="margin-top:0;">Staff Chat (Encrypted)</h3>
-                <div style="margin-bottom: 10px;">
-                    <span style="color: var(--gold); font-weight: bold;">Owner:</span> System looks stable.
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+                <div style="background:#222; padding:20px; border-radius:10px; border:1px solid #444;">
+                    <h3>🔒 High Command Chat</h3>
+                    <div style="height:100px; overflow-y:auto; color:#888; font-size:13px; margin-bottom:10px;">
+                        <div><span style="color:var(--gold)">Owner:</span> System Secure.</div>
+                        <div><span style="color:var(--gold)">Owner:</span> Waiting for reports.</div>
+                    </div>
+                    <input type="text" class="modal-input" placeholder="Secure Message..." style="width:100%;">
                 </div>
-                <input type="text" class="modal-input" placeholder="Type secure message..." style="width: 100%;">
+
+                <div style="background:#222; padding:20px; border-radius:10px; border:1px solid #444;">
+                    <h3>⚡ Quick Actions</h3>
+                    <button class="btn" style="background:var(--red); color:white; width:100%; margin-bottom:10px;">Purge Banned Users</button>
+                    <button class="btn" style="background:#333; color:white; width:100%;">Review Uploads (0)</button>
+                </div>
             </div>
         </div>
 
@@ -275,35 +189,109 @@
 
     <div class="modal" id="loginModal">
         <div class="modal-content">
-            <h2>User Login</h2>
-            <p style="font-size:12px; color:#aaa;">Play anywhere. Save progress.</p>
+            <h2>System Login</h2>
+            <p style="color:#aaa; font-size:12px;">owner/zorva | dev/1234 | user/any</p>
             <input type="text" id="uName" class="modal-input" placeholder="Username">
             <input type="password" id="pWord" class="modal-input" placeholder="Password">
-            <button class="btn btn-login" onclick="attemptLogin()">Login</button>
+            <button class="btn btn-login" onclick="login()">Access</button>
             <button class="btn" onclick="closeModal('loginModal')" style="background:none; color:#777;">Cancel</button>
         </div>
     </div>
 
     <div class="modal" id="uploadModal">
         <div class="modal-content">
-            <h2 style="color: #00d2d3;">Developer Upload</h2>
-            <p style="font-size:12px; color:#aaa;">Upload your game (.zip) for review.</p>
-            <input type="text" class="modal-input" placeholder="Game Title">
+            <h2 style="color: var(--dev);">Developer Upload</h2>
+            <input type="text" class="modal-input" placeholder="Game Name">
             <input type="file" class="modal-input">
-            <button class="btn btn-upload" onclick="alert('Sent for Review!'); closeModal('uploadModal')">Submit</button>
+            <button class="btn" style="background:var(--dev); color:black;" onclick="alert('Upload Sent!'); closeModal('uploadModal')">Submit</button>
             <button class="btn" onclick="closeModal('uploadModal')" style="background:none; color:#777;">Cancel</button>
         </div>
     </div>
 
     <script>
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-        
-        // SWITCH BETWEEN GAME VIEW AND ADMIN VIEW
+        // --- 1. SYSTEM STARTUP ---
+        // Runs immediately when page loads to check if user was already logged in
+        window.onload = function() {
+            checkSession();
+            
+            // Allow Admin to post news by pressing Enter
+            document.getElementById('adminNewsInput').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    postPublicNews(this.value);
+                    this.value = '';
+                }
+            });
+        };
+
+        // --- 2. LOGIN LOGIC ---
+        function login() {
+            const u = document.getElementById('uName').value;
+            const p = document.getElementById('pWord').value;
+            let role = 'user';
+
+            if (u === 'owner' && p === 'zorva') role = 'admin';
+            else if (u === 'dev' && p === '1234') role = 'dev';
+            
+            // SAVE SESSION (This fixes the refresh issue)
+            localStorage.setItem('zorvaUser', u);
+            localStorage.setItem('zorvaRole', role);
+
+            updateUI(u, role);
+            closeModal('loginModal');
+        }
+
+        function logout() {
+            // CLEAR SESSION
+            localStorage.removeItem('zorvaUser');
+            localStorage.removeItem('zorvaRole');
+            
+            // Reset UI
+            location.reload(); // Quickest way to reset everything
+        }
+
+        function checkSession() {
+            const u = localStorage.getItem('zorvaUser');
+            const role = localStorage.getItem('zorvaRole');
+            if (u && role) {
+                updateUI(u, role);
+            }
+        }
+
+        // --- 3. UI UPDATER ---
+        function updateUI(user, role) {
+            const loginBtn = document.getElementById('loginBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const userDisplay = document.getElementById('userInfo');
+            
+            loginBtn.style.display = 'none';
+            logoutBtn.style.display = 'block';
+            userDisplay.style.display = 'block';
+            
+            // Customize based on Role
+            if (role === 'admin') {
+                userDisplay.innerHTML = `<span style="color:var(--gold)">👑 ${user}</span>`;
+                document.getElementById('staffBtn').style.display = 'block';
+                document.getElementById('adminNewsInput').style.display = 'block'; // Show News Poster
+            } else if (role === 'dev') {
+                userDisplay.innerHTML = `<span style="color:var(--dev)">🛠️ ${user}</span>`;
+                document.getElementById('uploadBtn').style.display = 'block';
+            } else {
+                userDisplay.innerHTML = user;
+            }
+        }
+
+        // --- 4. FEATURES ---
+        function postPublicNews(text) {
+            const feed = document.getElementById('publicNewsFeed');
+            const item = document.createElement('div');
+            item.className = 'news-item';
+            item.innerText = text;
+            feed.appendChild(item);
+        }
+
         function toggleAdminView() {
             const portal = document.getElementById('portalView');
             const admin = document.getElementById('adminView');
-            
             if (portal.style.display === 'none') {
                 portal.style.display = 'block';
                 admin.style.display = 'none';
@@ -313,42 +301,14 @@
             }
         }
 
-        function showPortal() {
+        function goHome() {
             document.getElementById('portalView').style.display = 'block';
             document.getElementById('adminView').style.display = 'none';
         }
 
-        // LOGIN LOGIC (Simulated)
-        function attemptLogin() {
-            const u = document.getElementById('uName').value;
-            const p = document.getElementById('pWord').value;
-            const btnLogin = document.getElementById('loginBtn');
-            const userDisplay = document.getElementById('userInfo');
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-            // 1. ADMIN LOGIN (owner / zorva)
-            if (u === 'owner' && p === 'zorva') {
-                userDisplay.innerText = "👑 OWNER";
-                userDisplay.style.color = "var(--gold)";
-                document.getElementById('staffBtn').style.display = 'block'; // Reveal Admin Button
-            } 
-            // 2. DEVELOPER LOGIN (dev / 1234)
-            else if (u === 'dev' && p === '1234') {
-                userDisplay.innerText = "🛠️ DEV";
-                userDisplay.style.color = "#00d2d3";
-                document.getElementById('uploadBtn').style.display = 'block'; // Reveal Upload Button
-            }
-            // 3. NORMAL USER (anything else)
-            else {
-                userDisplay.innerText = u || "Player 1";
-                userDisplay.style.color = "white";
-            }
-
-            // UI Cleanup
-            btnLogin.style.display = 'none';
-            userDisplay.style.display = 'block';
-            closeModal('loginModal');
-        }
     </script>
-
 </body>
 </html>
