@@ -8,10 +8,13 @@ The secure, advanced browser gaming platform.
 * **Encrypted Chat:** Separate channels for Global and Staff-only communication.
 * **Developer Portal:** Upload games for review.
 
-## 🔑 Default Credentials (For Testing)
-* **Owner (Level 1):** `owner` / `zorva`
-* **Commander (Level 2):** `commander` / `1234`
-* **Moderator (Level 3):** `mod` / `1234`
+## 🔐 Access Control
+This system uses a tiered security clearance model.
+* **Level 1:** Owner (Nuclear Access)
+* **Level 2:** Commander (High Command)
+* **Level 3:** Moderator (Enforcement)
+
+*Note: Administrative access is restricted to authorized personnel only.*
 
 ## 🛡️ Security
 This site is protected with Content Security Policy (CSP) and Google Verification.
