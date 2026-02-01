@@ -3,20 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZorvaGames - Government System</title>
+    <title>ZorvaGames - Play Free Online</title>
     
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://images.unsplash.com; frame-src 'self';">
     <meta name="google-site-verification" content="CZ4HB0wl83PJNnk7KpUVhwCcmTqqy8CaMxF-EO0qCQA" />
 
     <style>
         :root {
-            --primary: #6c5ce7;
-            --dark: #121212;
-            --panel: #1e1e1e;
-            --gold: #ffd700;   /* Level 1 Owner */
-            --orange: #ff9f43; /* Level 2 Commander */
-            --green: #2ecc71;  /* Level 3 Mod */
-            --red: #ff4757;    /* Alerts/Kick */
+            --primary: #6c5ce7; /* Purple Brand */
+            --dark: #0f0f0f;    /* Very Dark BG */
+            --panel: #181818;   /* Game Cards */
+            --gold: #ffd700;    /* Admin */
         }
 
         body {
@@ -29,59 +26,46 @@
             overflow: hidden;
         }
 
-        /* --- SIDEBAR & CHATS --- */
+        /* --- SIDEBAR (Like CrazyGames) --- */
         .sidebar {
-            width: 300px;
+            width: 240px;
             background-color: var(--panel);
             display: flex;
             flex-direction: column;
-            border-right: 1px solid #333;
+            border-right: 1px solid #222;
         }
 
-        /* Chat Tabs */
-        .chat-tabs {
-            display: flex;
-            background: #000;
-        }
-        .tab {
-            flex: 1;
-            padding: 10px;
-            text-align: center;
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            padding: 20px;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            color: #666;
-            border-bottom: 2px solid transparent;
         }
-        .tab.active { color: white; border-bottom: 2px solid var(--primary); }
-        .tab.staff-only { color: var(--gold); }
+        .logo span { color: var(--primary); }
 
-        /* Chat Windows */
-        .chat-window {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            display: none; /* Hidden until tab clicked */
+        .menu-item {
+            padding: 12px 20px;
+            color: #aaa;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
         }
-        .chat-window.active { display: block; }
-
-        .chat-msg { font-size: 13px; margin-bottom: 8px; line-height: 1.4; }
-        .msg-sys { color: #888; font-style: italic; }
-        .msg-staff { color: var(--gold); }
-
-        /* Admin Input Area */
-        .admin-input-box {
-            padding: 10px;
-            border-top: 1px solid #333;
-            display: none; /* Hidden for normal users */
+        .menu-item:hover, .menu-item.active {
+            background-color: #222;
+            color: white;
+            border-left: 4px solid var(--primary);
         }
 
-        /* --- MAIN AREA --- */
+        /* --- MAIN CONTENT --- */
         .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
+            position: relative;
         }
 
         .top-nav {
@@ -91,53 +75,82 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 30px;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #222;
         }
 
-        /* DASHBOARD PANELS */
-        .dashboard-grid {
-            padding: 30px;
+        /* SEARCH BAR */
+        .search-bar {
+            background: #000;
+            border: 1px solid #333;
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: white;
+            width: 300px;
+        }
+
+        /* USER CONTROLS */
+        .btn { padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; border: none; font-size:12px; }
+        .btn-login { background-color: var(--primary); color: white; }
+        .btn-staff { background-color: var(--gold); color: black; display: none; } /* Hidden by default */
+        .btn-upload { background-color: #00d2d3; color: black; display: none; } /* Hidden by default */
+
+        /* --- GAME PORTAL (CrazyGames Style) --- */
+        .portal-view { padding: 30px; }
+
+        .featured-section {
+            width: 100%;
+            height: 500px;
+            background: black;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            border: 1px solid #333;
+            position: relative;
+        }
+        
+        .game-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 20px;
         }
 
-        .panel-box {
-            background: #2d2d2d;
+        .game-card {
+            background: var(--panel);
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .game-card:hover { transform: translateY(-5px); }
+        
+        .card-img {
+            height: 120px;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+        .card-info { padding: 10px; }
+        .card-title { font-size: 14px; font-weight: bold; display: block; }
+        .card-cat { font-size: 11px; color: #777; }
+
+        /* --- ADMIN DASHBOARD (Hidden by Default) --- */
+        .admin-view {
+            display: none; /* SECRET! */
+            padding: 30px;
+            background: #111;
+            height: 100%;
+        }
+        .admin-panel-box {
+            background: #222;
             padding: 20px;
             border-radius: 10px;
-            border: 1px solid #444;
-        }
-        .lvl1-box { border-color: var(--gold); display: none; } /* Only Owner sees this */
-
-        .request-item {
-            background: #111;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-left: 3px solid var(--red);
-            font-size: 13px;
-        }
-        
-        /* STAFF LIST */
-        .staff-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            border-bottom: 1px solid #333;
-            align-items: center;
-        }
-        .kick-btn {
-            background: var(--red);
-            border: none;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 11px;
-            display: none; /* Hidden by default */
+            border: 1px solid var(--gold);
+            margin-bottom: 20px;
         }
 
-        /* MODALS (Popups) */
+        /* MODALS */
         .modal {
             display: none;
             position: fixed;
@@ -145,15 +158,15 @@
             background: rgba(0,0,0,0.9);
             justify-content: center;
             align-items: center;
-            z-index: 200;
+            z-index: 999;
         }
         .modal-content {
             background: var(--panel);
             padding: 30px;
             border-radius: 10px;
-            width: 400px;
+            width: 300px;
             text-align: center;
-            border: 1px solid #555;
+            border: 1px solid #444;
         }
         .modal-input {
             width: 90%;
@@ -164,320 +177,177 @@
             color: white;
             border-radius: 5px;
         }
-        
-        .dual-btn-container { display: flex; gap: 10px; justify-content: center; margin-top: 15px; }
-        .btn { padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; font-weight: bold; }
-        .btn-code { background: var(--primary); color: white; }
-        .btn-perm { background: var(--orange); color: black; }
 
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <div style="padding: 20px; font-weight:900; font-size:20px; border-bottom:1px solid #333;">
-            ZORVA<span style="color:var(--primary)">GAMES</span>
-        </div>
-
-        <div class="chat-tabs">
-            <div class="tab active" onclick="switchChat('global')">Global 📢</div>
-            <div class="tab staff-only" id="staffTab" style="display:none;" onclick="switchChat('staff')">Staff 🔒</div>
-        </div>
-
-        <div class="chat-window active" id="globalChat">
-            <div class="chat-msg"><span class="msg-sys">System:</span> Welcome to ZorvaGames.</div>
-            <div class="chat-msg"><span class="msg-staff">Admin:</span> Recruitment is OPEN! Click "Apply".</div>
-        </div>
-
-        <div class="chat-window" id="staffChat">
-            <div class="chat-msg"><span class="msg-sys">System:</span> Secure Line. Encrypted.</div>
-        </div>
-
-        <div class="admin-input-box" id="chatInputArea">
-            <input type="text" class="modal-input" id="chatMsg" placeholder="Broadcast message..." onkeypress="sendChat(event)">
-        </div>
+        <div class="logo" onclick="showPortal()">ZORVA<span>GAMES</span></div>
+        
+        <div class="menu-item active">🏠 Home</div>
+        <div class="menu-item">🔥 New</div>
+        <div class="menu-item">🏆 Trending</div>
+        <hr style="border-color: #333; width: 100%; opacity: 0.3;">
+        <div class="menu-item">⚔️ Action</div>
+        <div class="menu-item">🏎️ Driving</div>
+        <div class="menu-item">🔫 Shooting</div>
+        <div class="menu-item">🧩 Puzzle</div>
     </div>
 
     <div class="main-content">
+        
         <div class="top-nav">
-            <b>Government Console</b>
-            <div>
-                <button class="btn" style="background:var(--primary); color:white;" id="applyBtn" onclick="openModal('recruitModal')">Apply for Staff</button>
-                
-                <button class="btn" style="background:#333; color:white;" id="loginBtn" onclick="openModal('loginModal')">Staff Login</button>
-                
-                <span id="userDisplay" style="display:none; font-weight:bold; color:var(--gold);">Owner</span>
-            </div>
-        </div>
-
-        <div class="dashboard-grid">
+            <input type="text" class="search-bar" placeholder="Search games...">
             
-            <div class="panel-box lvl1-box" id="inboxPanel">
-                <h3 style="color:var(--gold); margin-top:0;">📨 Owner Inbox</h3>
-                <div id="requestList">
-                    <div style="color:#666; font-style:italic;">No pending requests.</div>
-                </div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <button class="btn btn-upload" id="uploadBtn" onclick="openModal('uploadModal')">⬆ Upload Game</button>
+                
+                <button class="btn btn-staff" id="staffBtn" onclick="toggleAdminView()">⚙️ Government Panel</button>
+                
+                <button class="btn btn-login" id="loginBtn" onclick="openModal('loginModal')">Login</button>
+                <span id="userInfo" style="display:none; font-weight:bold; font-size:14px; margin-right:10px;">Guest</span>
             </div>
-
-            <div class="panel-box lvl1-box" id="codePanel">
-                <h3 style="color:var(--gold); margin-top:0;">🔑 Nuclear Code Generator</h3>
-                <p style="font-size:12px;">Generate a one-time code for Level 2/3 to kick admins.</p>
-                <button class="btn" style="background:var(--gold); color:black;" onclick="genCode()">Generate Code</button>
-                <h2 id="codeDisplay" style="font-family:monospace; color:var(--gold); letter-spacing:3px;"></h2>
-            </div>
-
-            <div class="panel-box" style="grid-column: span 2;">
-                <h3>Active Personnel</h3>
-                <div id="userList">
-                    <div class="staff-row">
-                        <span><b style="color:var(--gold)">👑 OWNER</b> (You)</span>
-                    </div>
-                    <div class="staff-row">
-                        <span><b style="color:var(--orange)">⚔️ Commander</b> (Level 2)</span>
-                        <button class="kick-btn" onclick="initiateKick('admin', 'Commander')">KICK</button>
-                    </div>
-                    <div class="staff-row">
-                        <span><b style="color:var(--green)">🛡️ Moderator</b> (Level 3)</span>
-                        <button class="kick-btn" onclick="initiateKick('admin', 'Moderator')">KICK</button>
-                    </div>
-                    <div class="staff-row">
-                        <span>👤 <span style="color:#aaa">BadUser123</span></span>
-                        <button class="kick-btn" onclick="initiateKick('user', 'BadUser123')">KICK</button>
-                    </div>
-                </div>
-            </div>
-
         </div>
+
+        <div class="portal-view" id="portalView">
+            
+            <div class="featured-section">
+                <iframe src="" style="width:100%; height:100%; border:none;" id="gameFrame"></iframe>
+                <div style="position: absolute; bottom: 20px; left: 20px; text-shadow: 2px 2px 4px black;">
+                    <h1 style="margin: 0; font-size: 40px;">TANK DUEL</h1>
+                    <p style="margin: 0; color: #ccc;">Play Free • Multiplayer • No Download</p>
+                </div>
+            </div>
+
+            <h2 style="border-left: 4px solid var(--primary); padding-left: 15px;">Recommended Games</h2>
+            
+            <div class="game-grid">
+                <div class="game-card">
+                    <div class="card-img">🏎️</div>
+                    <div class="card-info">
+                        <span class="card-title">Cyber Racing</span>
+                        <span class="card-cat">Driving</span>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <div class="card-img">🧟</div>
+                    <div class="card-info">
+                        <span class="card-title">Zombie Defense</span>
+                        <span class="card-cat">Action</span>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <div class="card-img">🚀</div>
+                    <div class="card-info">
+                        <span class="card-title">Space Wars</span>
+                        <span class="card-cat">Shooting</span>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <div class="card-img">⚽</div>
+                    <div class="card-info">
+                        <span class="card-title">Super Kicks</span>
+                        <span class="card-cat">Sports</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-view" id="adminView">
+            <h1 style="color: var(--gold);">🏛️ Government Control</h1>
+            
+            <div class="admin-panel-box">
+                <h3 style="margin-top:0;">Request Inbox (Level 1 Only)</h3>
+                <div style="color: #666; font-style: italic;">No pending kick requests.</div>
+            </div>
+
+            <div class="admin-panel-box">
+                <h3 style="margin-top:0;">Staff Chat (Encrypted)</h3>
+                <div style="margin-bottom: 10px;">
+                    <span style="color: var(--gold); font-weight: bold;">Owner:</span> System looks stable.
+                </div>
+                <input type="text" class="modal-input" placeholder="Type secure message..." style="width: 100%;">
+            </div>
+        </div>
+
     </div>
 
     <div class="modal" id="loginModal">
         <div class="modal-content">
-            <h2>Staff Login</h2>
-            <p style="font-size:12px; color:#aaa;">owner/zorva | commander/1234 | mod/1234</p>
-            <input type="text" id="uName" class="modal-input" placeholder="User">
-            <input type="password" id="pWord" class="modal-input" placeholder="Pass">
-            <button class="btn" style="background:white; color:black;" onclick="login()">Login</button>
-            <button class="btn" style="background:none; color:#888;" onclick="closeModal('loginModal')">Close</button>
+            <h2>User Login</h2>
+            <p style="font-size:12px; color:#aaa;">Play anywhere. Save progress.</p>
+            <input type="text" id="uName" class="modal-input" placeholder="Username">
+            <input type="password" id="pWord" class="modal-input" placeholder="Password">
+            <button class="btn btn-login" onclick="attemptLogin()">Login</button>
+            <button class="btn" onclick="closeModal('loginModal')" style="background:none; color:#777;">Cancel</button>
         </div>
     </div>
 
-    <div class="modal" id="kickMethodModal">
+    <div class="modal" id="uploadModal">
         <div class="modal-content">
-            <h2 style="color:var(--red);">⚠️ KICKING AN ADMIN</h2>
-            <p>You are targeting a fellow Admin. Authorization required.</p>
-            <div class="dual-btn-container">
-                <button class="btn btn-code" onclick="openModal('codeKickModal'); closeModal('kickMethodModal')">I Have a Code</button>
-                <button class="btn btn-perm" onclick="openModal('permKickModal'); closeModal('kickMethodModal')">Ask Permission</button>
-            </div>
-            <br>
-            <button class="btn" style="background:none; color:#888;" onclick="closeModal('kickMethodModal')">Cancel</button>
-        </div>
-    </div>
-
-    <div class="modal" id="codeKickModal">
-        <div class="modal-content">
-            <h3>Enter Authorization Code</h3>
-            <input type="text" id="kickCodeInput" class="modal-input" placeholder="XXXX-XXXX">
-            <button class="btn btn-code" onclick="processCodeKick()">FIRE!</button>
-            <button class="btn" style="background:none; color:#888;" onclick="closeModal('codeKickModal')">Cancel</button>
-        </div>
-    </div>
-
-    <div class="modal" id="permKickModal">
-        <div class="modal-content">
-            <h3>Request Permission</h3>
-            <p>The Owner will receive this request.</p>
-            <input type="text" id="kickReason" class="modal-input" placeholder="Reason (e.g. Abuse of power)">
-            <button class="btn btn-perm" onclick="sendPermissionRequest()">Send Request</button>
-            <button class="btn" style="background:none; color:#888;" onclick="closeModal('permKickModal')">Cancel</button>
-        </div>
-    </div>
-
-    <div class="modal" id="recruitModal">
-        <div class="modal-content">
-            <h3>Apply for Staff</h3>
-            <input type="text" class="modal-input" placeholder="Your Username">
-            <input type="text" class="modal-input" placeholder="Why should we hire you?">
-            <button class="btn" style="background:var(--primary); color:white;" onclick="alert('Application Sent to Admin!'); closeModal('recruitModal')">Submit Application</button>
-            <button class="btn" style="background:none; color:#888;" onclick="closeModal('recruitModal')">Close</button>
+            <h2 style="color: #00d2d3;">Developer Upload</h2>
+            <p style="font-size:12px; color:#aaa;">Upload your game (.zip) for review.</p>
+            <input type="text" class="modal-input" placeholder="Game Title">
+            <input type="file" class="modal-input">
+            <button class="btn btn-upload" onclick="alert('Sent for Review!'); closeModal('uploadModal')">Submit</button>
+            <button class="btn" onclick="closeModal('uploadModal')" style="background:none; color:#777;">Cancel</button>
         </div>
     </div>
 
     <script>
-        // --- SYSTEM VARIABLES ---
-        let myLevel = 0; // 1=Owner, 2=Commander, 3=Mod
-        let activeTarget = "";
-        let generatedCode = "";
-        let requests = []; // Stores pending kick requests for the Owner
-
-        // --- 1. LOGIN & UI LOGIC ---
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        
+        // SWITCH BETWEEN GAME VIEW AND ADMIN VIEW
+        function toggleAdminView() {
+            const portal = document.getElementById('portalView');
+            const admin = document.getElementById('adminView');
+            
+            if (portal.style.display === 'none') {
+                portal.style.display = 'block';
+                admin.style.display = 'none';
+            } else {
+                portal.style.display = 'none';
+                admin.style.display = 'block';
+            }
+        }
 
-        function login() {
+        function showPortal() {
+            document.getElementById('portalView').style.display = 'block';
+            document.getElementById('adminView').style.display = 'none';
+        }
+
+        // LOGIN LOGIC (Simulated)
+        function attemptLogin() {
             const u = document.getElementById('uName').value;
             const p = document.getElementById('pWord').value;
+            const btnLogin = document.getElementById('loginBtn');
+            const userDisplay = document.getElementById('userInfo');
 
-            if (u === 'owner' && p === 'zorva') setLevel(1);
-            else if (u === 'commander' && p === '1234') setLevel(2);
-            else if (u === 'mod' && p === '1234') setLevel(3);
-            else alert("Invalid Credentials");
+            // 1. ADMIN LOGIN (owner / zorva)
+            if (u === 'owner' && p === 'zorva') {
+                userDisplay.innerText = "👑 OWNER";
+                userDisplay.style.color = "var(--gold)";
+                document.getElementById('staffBtn').style.display = 'block'; // Reveal Admin Button
+            } 
+            // 2. DEVELOPER LOGIN (dev / 1234)
+            else if (u === 'dev' && p === '1234') {
+                userDisplay.innerText = "🛠️ DEV";
+                userDisplay.style.color = "#00d2d3";
+                document.getElementById('uploadBtn').style.display = 'block'; // Reveal Upload Button
+            }
+            // 3. NORMAL USER (anything else)
+            else {
+                userDisplay.innerText = u || "Player 1";
+                userDisplay.style.color = "white";
+            }
 
+            // UI Cleanup
+            btnLogin.style.display = 'none';
+            userDisplay.style.display = 'block';
             closeModal('loginModal');
         }
-
-        function setLevel(lvl) {
-            myLevel = lvl;
-            // Update UI for logged in staff
-            document.getElementById('loginBtn').style.display = 'none';
-            document.getElementById('applyBtn').style.display = 'none';
-            document.getElementById('userDisplay').style.display = 'block';
-            document.getElementById('staffTab').style.display = 'block'; // Show private chat tab
-            document.getElementById('chatInputArea').style.display = 'block'; // Allow typing in chat
-
-            // Show Kick Buttons (Staff can see them)
-            document.querySelectorAll('.kick-btn').forEach(b => b.style.display = 'block');
-
-            // Apply Specific Level Powers
-            if (lvl === 1) {
-                document.getElementById('userDisplay').innerText = "👑 OWNER";
-                document.querySelectorAll('.lvl1-box').forEach(b => b.style.display = 'block'); // Show Owner Panels
-                renderRequests(); // Refresh Inbox
-            } else if (lvl === 2) {
-                document.getElementById('userDisplay').innerText = "⚔️ COMMANDER";
-                document.getElementById('userDisplay').style.color = "var(--orange)";
-            } else {
-                document.getElementById('userDisplay').innerText = "🛡️ MOD";
-                document.getElementById('userDisplay').style.color = "var(--green)";
-            }
-        }
-
-        // --- 2. KICK FLOW LOGIC ---
-        function initiateKick(type, name) {
-            activeTarget = name;
-
-            // Kicking a User? (Easy, no code needed)
-            if (type === 'user') {
-                if(confirm("Kick user " + name + "?")) alert(name + " kicked!");
-                return;
-            }
-
-            // Kicking an ADMIN? (Strict Rules)
-            if (myLevel === 1) {
-                // Owner kicks instantly
-                alert("OWNER POWER: " + name + " has been removed.");
-            } else {
-                // Levels 2 & 3 need authorization (Code or Permission)
-                openModal('kickMethodModal');
-            }
-        }
-
-        // OPTION A: Code Kick (Instant)
-        function genCode() {
-            generatedCode = "ZOR-" + Math.floor(1000 + Math.random() * 9000);
-            document.getElementById('codeDisplay').innerText = generatedCode;
-        }
-
-        function processCodeKick() {
-            const input = document.getElementById('kickCodeInput').value;
-            if (input === generatedCode && generatedCode !== "") {
-                alert("✅ CODE VALID. " + activeTarget + " has been kicked.");
-                generatedCode = ""; // Burn code after use
-                closeModal('codeKickModal');
-            } else {
-                alert("❌ INVALID CODE");
-            }
-        }
-
-        // OPTION B: Permission Request (Wait for Owner)
-        function sendPermissionRequest() {
-            const reason = document.getElementById('kickReason').value;
-            // Add to Owner's Inbox
-            requests.push({ target: activeTarget, reason: reason, from: (myLevel === 2 ? "Commander" : "Mod") });
-            alert("📨 Request sent to Owner Inbox. Wait for approval.");
-            closeModal('permKickModal');
-            renderRequests(); // Update simulation instantly
-        }
-
-        // --- 3. OWNER INBOX LOGIC ---
-        function renderRequests() {
-            const list = document.getElementById('requestList');
-            // Only render if Owner is logged in
-            if (myLevel !== 1) return;
-
-            if (requests.length === 0) {
-                list.innerHTML = '<div style="color:#666;">No pending requests.</div>';
-                return;
-            }
-            
-            list.innerHTML = ""; // Clear list
-            requests.forEach((req, index) => {
-                const item = document.createElement('div');
-                item.className = 'request-item';
-                item.innerHTML = `
-                    <div style="color:var(--gold)">Request from: ${req.from}</div>
-                    <div>Target: <b>${req.target}</b></div>
-                    <div>Reason: "${req.reason}"</div>
-                    <div style="margin-top:5px;">
-                        <button class="btn" style="padding:4px 8px; font-size:10px; background:var(--green); color:black;" onclick="approveReq(${index})">APPROVE</button>
-                        <button class="btn" style="padding:4px 8px; font-size:10px; background:var(--red); color:white;" onclick="denyReq(${index})">DENY</button>
-                    </div>
-                `;
-                list.appendChild(item);
-            });
-        }
-
-        function approveReq(index) {
-            alert("✅ APPROVED. " + requests[index].target + " has been kicked.");
-            requests.splice(index, 1); // Remove from list
-            renderRequests();
-        }
-
-        function denyReq(index) {
-            alert("🚫 DENIED.");
-            requests.splice(index, 1); // Remove from list
-            renderRequests();
-        }
-
-        // --- 4. CHAT LOGIC ---
-        let activeChat = 'global';
-        function switchChat(type) {
-            activeChat = type;
-            // Hide all windows, show selected
-            document.querySelectorAll('.chat-window').forEach(w => w.style.display = 'none');
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            
-            if (type === 'global') {
-                document.getElementById('globalChat').style.display = 'block';
-                document.querySelectorAll('.tab')[0].classList.add('active');
-            } else {
-                document.getElementById('staffChat').style.display = 'block';
-                document.getElementById('staffTab').classList.add('active');
-            }
-        }
-
-        function sendChat(e) {
-            if (e.key === 'Enter') {
-                const input = document.getElementById('chatMsg');
-                const text = input.value;
-                if(!text) return;
-
-                const boxID = activeChat === 'global' ? 'globalChat' : 'staffChat';
-                const box = document.getElementById(boxID);
-                
-                const msg = document.createElement('div');
-                msg.className = 'chat-msg';
-                
-                // Color formatting based on rank
-                let prefix = myLevel === 1 ? "👑 Owner" : (myLevel === 2 ? "⚔️ Cmdr" : "🛡️ Mod");
-                let color = myLevel === 1 ? "var(--gold)" : (myLevel === 2 ? "var(--orange)" : "var(--green)");
-
-                msg.innerHTML = `<span style="color:${color}; font-weight:bold;">${prefix}:</span> ${text}`;
-                box.appendChild(msg);
-                input.value = "";
-            }
-        }
-
     </script>
 
 </body>
