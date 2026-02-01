@@ -4,149 +4,200 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-src 'self';">
-
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://images.unsplash.com; frame-src 'self';">
     <meta name="google-site-verification" content="CZ4HB0wl83PJNnk7KpUVhwCcmTqqy8CaMxF-EO0qCQA" />
 
-    <title>ZorvaGames - Secure Gaming Platform</title>
-    <meta name="description" content="Welcome to ZorvaGames. A secure, free destination for browser-based multiplayer games.">
-    <meta name="keywords" content="ZorvaGames, Zorva, secure games, free tank game, browser games">
-
-    <meta property="og:site_name" content="ZorvaGames">
-    <meta property="og:title" content="ZorvaGames - Secure & Free">
-    <meta property="og:description" content="Play safely on ZorvaGames. No ads, no tracking, just games.">
-
+    <title>ZorvaGames - The Ultimate Gaming Portal</title>
+    
     <style>
+        :root {
+            --primary: #6c5ce7; /* Purple (Like CrazyGames) */
+            --accent: #00b894;  /* Green for buttons */
+            --dark: #121212;
+            --panel: #1e1e1e;
+        }
+
         body {
             margin: 0;
             padding: 0;
-            background-color: #0d0d0d;
+            background-color: var(--dark);
             color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex; /* This makes the Sidebar + Content layout work */
+            height: 100vh;
+            overflow: hidden; /* No scrolling the whole page, only the game area */
         }
 
-        .navbar {
-            background-color: #1a1a1a;
-            padding: 15px 40px;
-            border-bottom: 3px solid #00ff88; /* Changed to Green for Security vibe */
+        /* 1. SIDEBAR (The Left Menu) */
+        .sidebar {
+            width: 250px;
+            background-color: var(--panel);
+            height: 100%;
             display: flex;
-            align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            flex-direction: column;
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+            z-index: 10;
         }
-        
+
         .logo {
-            font-size: 28px;
-            font-weight: 800;
+            font-size: 24px;
+            font-weight: 900;
             color: white;
-            text-decoration: none;
+            margin-bottom: 40px;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
-        
-        .logo span {
-            color: #00ff88; /* Green highlight */
+        .logo span { color: var(--primary); }
+
+        .menu-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 600;
+            color: #aaa;
+        }
+        .menu-item:hover, .menu-item.active {
+            background-color: var(--primary);
+            color: white;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            text-align: center;
+        /* 2. MAIN CONTENT AREA (The Right Side) */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto; /* Allow scrolling inside the game area */
         }
 
-        h1 {
-            font-size: 50px;
-            margin-bottom: 10px;
-            font-weight: 300;
-        }
-
-        p.tagline {
-            font-size: 18px;
-            color: #888;
+        /* FEATURED GAME (The Big Box) */
+        .featured-section {
+            background-color: var(--panel);
+            padding: 20px;
+            border-radius: 15px;
             margin-bottom: 40px;
         }
-
-        .game-wrapper {
-            background-color: black;
-            border: 2px solid #333;
-            width: 1152px;
-            height: 648px;
-            margin: 0 auto;
-            box-shadow: 0 0 80px rgba(0, 255, 136, 0.15); /* Green Glow */
-        }
-
-        iframe {
+        
+        .game-frame {
             width: 100%;
-            height: 100%;
+            aspect-ratio: 16/9; /* Automatically keeps the rectangle shape */
+            background-color: black;
+            border-radius: 10px;
             border: none;
         }
 
-        .info-box {
-            margin-top: 40px;
-            background-color: #1a1a1a;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: left;
-            display: inline-block;
-            width: 80%;
+        /* GAME GRID (The "More Games" Section) */
+        .grid-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--accent);
+            padding-left: 15px;
         }
 
-        .key {
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .game-card {
+            background-color: var(--panel);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 120px;
             background-color: #333;
-            border: 1px solid #555;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-weight: bold;
-            color: #00ff88;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            font-size: 40px;
         }
 
-        .footer {
-            margin-top: 60px;
-            padding: 40px;
-            background-color: #111;
-            color: #555;
-            text-align: center;
-            font-size: 14px;
+        .card-info {
+            padding: 15px;
         }
+        .card-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .card-cat {
+            font-size: 12px;
+            color: #888;
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="navbar">
-        <a href="#" class="logo">ZORVA<span>GAMES</span></a>
+    <div class="sidebar">
+        <div class="logo">ZORVA<span>GAMES</span></div>
+        
+        <div class="menu-item active">🏠 Home</div>
+        <div class="menu-item">🔥 New</div>
+        <div class="menu-item">🏆 Trending</div>
+        <hr style="border-color: #333; width: 100%; margin: 20px 0;">
+        <div class="menu-item">⚔️ Action</div>
+        <div class="menu-item">🏎️ Driving</div>
+        <div class="menu-item">🧩 Puzzle</div>
+        <div class="menu-item">🔫 Shooting</div>
     </div>
 
-    <div class="container">
+    <div class="main-content">
         
-        <h1>Welcome to ZorvaGames</h1>
-        <p class="tagline">The Secure Place to Play</p>
-
-        <div class="game-wrapper">
-            <iframe src="" id="game_frame"></iframe>
+        <div class="featured-section">
+            <h2 style="margin-top: 0;">Featured: Tank Duel</h2>
+            <iframe class="game-frame" src="" id="main_game"></iframe>
         </div>
 
-        <div class="info-box">
-            <h2 style="color: #00ff88; margin-top: 0;">How to Play</h2>
-            <p><strong>Tank Duel</strong> is running on a secure connection.</p>
-            <hr style="border-color: #333;">
-            <div style="display: flex; justify-content: space-between;">
-                <div style="width: 45%;">
-                    <h3 style="color: #4da6ff;">Player 1 (Blue)</h3>
-                    <p>Move: <span class="key">W</span> <span class="key">A</span> <span class="key">S</span> <span class="key">D</span></p>
-                    <p>Shoot: <span class="key">Space</span></p>
-                </div>
-                <div style="width: 45%;">
-                    <h3 style="color: #ff4d4d;">Player 2 (Red)</h3>
-                    <p>Move: <span class="key">Arrows</span></p>
-                    <p>Shoot: <span class="key">Enter</span></p>
+        <div class="grid-title">Recommended for You</div>
+        <div class="game-grid">
+            
+            <div class="game-card">
+                <div class="card-image">🎮</div>
+                <div class="card-info">
+                    <span class="card-title">Cyber Racer</span>
+                    <span class="card-cat">Driving</span>
                 </div>
             </div>
+
+            <div class="game-card">
+                <div class="card-image">🧟</div>
+                <div class="card-info">
+                    <span class="card-title">Zombie Defense</span>
+                    <span class="card-cat">Action</span>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="card-image">⚽</div>
+                <div class="card-info">
+                    <span class="card-title">Super Kicks</span>
+                    <span class="card-cat">Sports</span>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="card-image">🚀</div>
+                <div class="card-info">
+                    <span class="card-title">Space Wars</span>
+                    <span class="card-cat">Shooting</span>
+                </div>
+            </div>
+
         </div>
-
-    </div>
-
-    <div class="footer">
-        &copy; 2026 ZorvaGames. Protected & Secure.<br>
-        Play Free. No Downloads.
     </div>
 
 </body>
