@@ -17,7 +17,7 @@
             --orange: #ff9f43; /* Commander */
             --green: #2ecc71;  /* Mod */
             --dev: #00d2d3;    /* Developer */
-            --red: #ff4757;    /* Critical/Kick */
+            --red: #ff4757;    /* Critical */
             --text-sub: #a4b0be;
         }
 
@@ -31,7 +31,7 @@
             overflow: hidden;
         }
 
-        /* --- SIDEBAR NAV --- */
+        /* --- SIDEBAR --- */
         .sidebar {
             width: 280px;
             background-color: var(--panel);
@@ -41,14 +41,7 @@
         }
 
         .logo { 
-            font-size: 26px; 
-            font-weight: 900; 
-            padding: 20px; 
-            color: white; 
-            cursor: pointer; 
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px solid #222;
+            font-size: 26px; font-weight: 900; padding: 20px; color: white; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #222;
         }
         .logo span { color: var(--primary); }
 
@@ -56,15 +49,8 @@
         .menu-item { padding: 12px 25px; color: var(--text-sub); cursor: pointer; font-weight: 600; transition:0.2s; display: flex; align-items: center; gap: 10px; }
         .menu-item:hover, .menu-item.active { background: #222; color: white; border-left: 4px solid var(--primary); padding-left: 21px; }
 
-        /* --- ADVANCED CHAT SYSTEM --- */
-        .chat-container {
-            margin-top: auto;
-            border-top: 1px solid #333;
-            background: #111;
-            display: flex;
-            flex-direction: column;
-            height: 35%;
-        }
+        /* --- CHAT SYSTEM --- */
+        .chat-container { margin-top: auto; border-top: 1px solid #333; background: #111; display: flex; flex-direction: column; height: 35%; }
         .chat-tabs { display: flex; background: #000; border-bottom: 1px solid #333; }
         .tab { flex: 1; padding: 10px; text-align: center; cursor: pointer; font-size: 11px; font-weight: bold; color: #555; text-transform: uppercase; }
         .tab.active { color: white; border-bottom: 2px solid var(--primary); background: #222; }
@@ -72,24 +58,18 @@
 
         .chat-box { flex: 1; padding: 15px; overflow-y: auto; font-size: 12px; display: none; scroll-behavior: smooth; }
         .chat-box.active { display: block; }
-        
         .msg { margin-bottom: 8px; line-height: 1.4; border-bottom: 1px solid #222; padding-bottom: 4px; word-wrap: break-word; }
-        .msg-sys { color: #555; font-style: italic; }
 
-        /* --- MAIN CONTENT AREA --- */
+        /* --- MAIN CONTENT --- */
         .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; position: relative; }
 
-        .top-nav {
-            height: 70px; background: var(--panel); display: flex; align-items: center; justify-content: space-between; padding: 0 30px; border-bottom: 1px solid #222;
-        }
+        .top-nav { height: 70px; background: var(--panel); display: flex; align-items: center; justify-content: space-between; padding: 0 30px; border-bottom: 1px solid #222; }
         .search-bar { background: #000; border: 1px solid #333; padding: 10px 20px; border-radius: 30px; color: white; width: 300px; outline: none; transition: 0.3s; }
         .search-bar:focus { border-color: var(--primary); }
 
-        /* BUTTON TOOLKIT */
         .btn-group { display: flex; align-items: center; gap: 12px; }
         .btn { padding: 8px 18px; border-radius: 6px; cursor: pointer; font-weight: 700; border: none; font-size:12px; transition:0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .btn:hover { transform: translateY(-2px); opacity: 0.9; }
-        
         .btn-primary { background-color: var(--primary); color: white; }
         .btn-logout { background-color: var(--red); color: white; display: none; }
         .btn-staff { background-color: var(--gold); color: black; display: none; }
@@ -101,13 +81,12 @@
         .view-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* PORTAL VIEW */
+        /* PORTAL STYLES */
         .game-frame { 
             width: 100%; height: 450px; background: black; border-radius: 15px; 
             margin-bottom: 30px; border: 1px solid #333; position: relative; 
             display: flex; align-items: center; justify-content: center;
-            background-image: radial-gradient(circle, #222 1px, transparent 1px);
-            background-size: 20px 20px;
+            background-image: radial-gradient(circle, #222 1px, transparent 1px); background-size: 20px 20px;
         }
         .grid-title { font-size: 22px; font-weight: bold; margin-bottom: 20px; border-left: 4px solid var(--primary); padding-left: 15px; }
         .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
@@ -115,16 +94,17 @@
         .game-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 5px 15px rgba(108, 92, 231, 0.2); }
         .card-img { height: 120px; background: #252525; display: flex; align-items: center; justify-content: center; font-size: 40px; }
 
-        /* ADMIN DASHBOARD VIEW */
+        /* DASHBOARD STYLES */
         .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
         .panel { background: #1a1a1a; padding: 25px; border-radius: 12px; border: 1px solid #333; }
-        .lvl1-only { border: 1px solid var(--gold); display: none; } /* Hidden by default */
+        .lvl1-only { border: 1px solid var(--gold); display: none; } 
 
-        /* INBOX STYLES */
-        .req-item { background: #000; padding: 10px; margin-bottom: 8px; border-left: 3px solid var(--red); border-radius: 4px; font-size: 13px; }
-        .req-actions { display: flex; gap: 5px; margin-top: 5px; }
+        /* INBOX ITEMS */
+        .inbox-item { background: #000; padding: 12px; margin-bottom: 8px; border-radius: 6px; font-size: 13px; border-left: 3px solid #555; }
+        .inbox-item.alert { border-color: var(--red); }
+        .inbox-item.recruit { border-color: var(--primary); }
+        .req-actions { display: flex; gap: 5px; margin-top: 8px; }
 
-        /* STAFF LIST STYLES */
         .staff-row { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid #222; font-size: 13px; }
         .staff-badge { padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-right: 8px; color: black; }
 
@@ -155,27 +135,25 @@
             </div>
 
             <div class="chat-box active" id="globalChat">
-                <div class="msg"><span class="msg-sys">System:</span> Welcome to ZorvaGames.</div>
+                <div class="msg"><span style="color:#666;">System:</span> Welcome to ZorvaGames.</div>
                 <div class="msg" id="adminBroadcast"><span style="color:var(--gold); font-weight:bold;">ADMIN:</span> Recruitment is OPEN!</div>
             </div>
-
             <div class="chat-box" id="staffChat">
-                <div class="msg"><span class="msg-sys">Encrypted Channel Established.</span></div>
+                <div class="msg"><span style="color:#666;">Encrypted Channel Established.</span></div>
             </div>
 
             <div id="chatInputArea" style="padding:10px; background:#000; display:none;">
-                <input type="text" id="chatInput" placeholder="Broadcast message..." style="width:90%; background:#111; border:none; color:white; padding:5px; font-size:11px;" onkeypress="sendChat(event)">
+                <input type="text" id="chatInput" placeholder="Broadcast..." style="width:90%; background:#111; border:none; color:white; padding:5px; font-size:11px;" onkeypress="sendChat(event)">
             </div>
         </div>
     </div>
 
     <div class="main-content">
-        
         <div class="top-nav">
             <input type="text" class="search-bar" placeholder="Search games...">
             
             <div class="btn-group">
-                <button class="btn btn-primary" onclick="openModal('recruitModal')">Apply</button>
+                <button class="btn btn-primary" onclick="openModal('recruitModal')">Apply for Staff</button>
                 <button class="btn btn-dev" id="uploadBtn" onclick="openModal('uploadModal')">⬆ Upload</button>
                 <button class="btn btn-staff" id="staffBtn" onclick="switchView('admin')">⚙️ Gov Panel</button>
                 
@@ -208,8 +186,9 @@
             
             <div class="dash-grid">
                 <div class="panel lvl1-only" id="inboxPanel">
-                    <h3 style="color:var(--gold); margin-top:0;">📨 Owner Inbox (Kick Requests)</h3>
-                    <div id="requestList" style="color:#666; font-style:italic;">No pending requests.</div>
+                    <h3 style="color:var(--gold); margin-top:0;">📨 Action Center</h3>
+                    <div style="font-size:11px; color:#666; margin-bottom:10px;">Security Alerts & Staff Applications</div>
+                    <div id="actionList" style="color:#666; font-style:italic;">No pending actions.</div>
                 </div>
 
                 <div class="panel lvl1-only" id="codePanel">
@@ -222,9 +201,7 @@
                 <div class="panel" style="grid-column: span 2;">
                     <h3>Active Personnel</h3>
                     <div id="staffList">
-                        <div class="staff-row">
-                            <div><span class="staff-badge" style="background:var(--gold);">OWNER</span> You (Level 1)</div>
-                        </div>
+                        <div class="staff-row"><div><span class="staff-badge" style="background:var(--gold);">OWNER</span> You (Level 1)</div></div>
                         <div class="staff-row">
                             <div><span class="staff-badge" style="background:var(--orange);">CMDR</span> Commander (Level 2)</div>
                             <button class="btn-kick" onclick="tryKick('admin', 'Commander')">KICK</button>
@@ -259,9 +236,10 @@
     <div class="modal" id="recruitModal">
         <div class="modal-box">
             <h2 style="color:var(--primary);">Staff Application</h2>
-            <input type="text" class="inp" placeholder="Why do you want to join?">
+            <p style="font-size:12px; color:#aaa;">Applications are sent directly to the Owner.</p>
+            <input type="text" id="appReason" class="inp" placeholder="Why should we hire you?">
             <div style="margin-top:20px;">
-                <button class="btn btn-primary" onclick="alert('Application Sent!'); closeModal('recruitModal')">SUBMIT</button>
+                <button class="btn btn-primary" onclick="submitApp()">SUBMIT</button>
                 <button class="btn" onclick="closeModal('recruitModal')" style="background:transparent; color:#777;">Cancel</button>
             </div>
         </div>
@@ -279,7 +257,7 @@
     <div class="modal" id="kickChoiceModal">
         <div class="modal-box">
             <h2 style="color:var(--red);">⚠️ Kicking Admin</h2>
-            <p>Authorization is required for this action.</p>
+            <p>Authorization is required.</p>
             <div style="display:flex; gap:10px; justify-content:center; margin-top:20px;">
                 <button class="btn btn-primary" onclick="openModal('codeModal'); closeModal('kickChoiceModal')">Use Code</button>
                 <button class="btn" style="background:var(--orange); color:black;" onclick="openModal('permModal'); closeModal('kickChoiceModal')">Ask Permission</button>
@@ -306,17 +284,18 @@
         </div>
     </div>
 
-
     <script>
         // --- GLOBAL STATE ---
-        let session = { user: 'Guest', role: 'guest' }; // owner, commander, mod, dev, user
+        let session = { user: 'Guest', role: 'guest' };
         let activeTarget = '';
         let validCode = '';
-        let kickRequests = [];
+        
+        // --- PERSISTENT DATABASE (The Logic Fix) ---
+        // We load lists from localStorage so they survive a refresh
+        let inboxData = JSON.parse(localStorage.getItem('zorvaInbox')) || [];
 
         // --- 1. STARTUP & SESSION ---
         window.onload = function() {
-            // Restore session from LocalStorage
             const savedUser = localStorage.getItem('zorvaUser');
             const savedRole = localStorage.getItem('zorvaRole');
             if(savedUser && savedRole) {
@@ -330,7 +309,6 @@
             const u = document.getElementById('uName').value;
             const p = document.getElementById('pWord').value;
 
-            // Credentials Check
             if (u === 'owner' && p === 'zorva') session.role = 'owner';
             else if (u === 'commander' && p === '1234') session.role = 'commander';
             else if (u === 'mod' && p === '1234') session.role = 'mod';
@@ -338,7 +316,6 @@
             else session.role = 'user';
 
             session.user = u;
-            // Save to browser memory
             localStorage.setItem('zorvaUser', session.user);
             localStorage.setItem('zorvaRole', session.role);
             
@@ -347,13 +324,13 @@
         }
 
         function logout() {
-            localStorage.clear();
+            localStorage.removeItem('zorvaUser');
+            localStorage.removeItem('zorvaRole');
             location.reload();
         }
 
         // --- 2. UI MANAGER ---
         function updateUI() {
-            // Hide Login, Show User Info
             document.getElementById('loginBtn').style.display = 'none';
             document.getElementById('logoutBtn').style.display = 'block';
             const disp = document.getElementById('userDisplay');
@@ -367,10 +344,8 @@
             document.querySelectorAll('.lvl1-only').forEach(e => e.style.display = 'none');
             document.querySelectorAll('.btn-kick').forEach(e => e.style.display = 'none');
 
-            // Apply Role-Specific UI
-            let prefix = '';
-            let color = 'white';
-
+            // Apply Powers
+            let prefix = ''; let color = 'white';
             if(session.role === 'owner') {
                 prefix = '👑 '; color = 'var(--gold)';
                 enableAdminFeatures(true); 
@@ -395,23 +370,38 @@
             document.querySelectorAll('.btn-kick').forEach(e => e.style.display = 'block');
             if(isOwner) {
                 document.querySelectorAll('.lvl1-only').forEach(e => e.style.display = 'block');
-                renderInbox();
+                renderInbox(); // Show the persisted messages
             }
         }
 
-        // --- 3. KICK LOGIC (The Brain) ---
+        // --- 3. RECRUITMENT LOGIC (New Feature) ---
+        function submitApp() {
+            const reason = document.getElementById('appReason').value;
+            if(!reason) return alert("Please write a reason!");
+            
+            // Add to database
+            const newItem = {
+                type: 'recruit',
+                from: session.user,
+                text: reason,
+                id: Date.now()
+            };
+            
+            inboxData.push(newItem);
+            saveData(); // Save to localStorage
+            
+            alert("Application Sent! The Owner will see it in their console.");
+            closeModal('recruitModal');
+        }
+
+        // --- 4. KICK LOGIC & INBOX ---
         function tryKick(type, name) {
             activeTarget = name;
-            
             if(type === 'user') {
                 if(confirm(`Kick user ${name}?`)) alert("User removed.");
             } else {
-                // Kicking Staff
-                if(session.role === 'owner') {
-                    alert("OWNER OVERRIDE: " + name + " removed.");
-                } else {
-                    openModal('kickChoiceModal');
-                }
+                if(session.role === 'owner') alert("OWNER OVERRIDE: " + name + " removed.");
+                else openModal('kickChoiceModal');
             }
         }
 
@@ -421,53 +411,84 @@
         }
 
         function runCodeKick() {
-            const input = document.getElementById('kickCodeInput').value;
-            if(input === validCode && validCode !== '') {
+            if(document.getElementById('kickCodeInput').value === validCode && validCode !== '') {
                 alert("✅ Code Valid. " + activeTarget + " kicked.");
-                validCode = ''; 
-                closeModal('codeModal');
-            } else {
-                alert("❌ Invalid Code");
-            }
+                validCode = ''; closeModal('codeModal');
+            } else alert("❌ Invalid Code");
         }
 
         function runPermReq() {
             const reason = document.getElementById('kickReason').value;
-            kickRequests.push({ from: session.user, target: activeTarget, reason: reason });
+            const newItem = {
+                type: 'alert',
+                from: session.user,
+                target: activeTarget,
+                text: reason,
+                id: Date.now()
+            };
+            inboxData.push(newItem);
+            saveData();
             alert("📨 Request sent to Owner.");
             closeModal('permModal');
-            // In a real app, this would send to server. Here we simulate update if owner logs in later.
         }
 
+        // --- 5. RENDER INBOX (The Unified Action Center) ---
         function renderInbox() {
-            const list = document.getElementById('requestList');
-            if(kickRequests.length === 0) {
-                list.innerText = "No pending requests."; return;
+            const list = document.getElementById('actionList');
+            if(inboxData.length === 0) {
+                list.innerText = "No pending actions."; return;
             }
             list.innerHTML = '';
-            kickRequests.forEach((req, idx) => {
+            
+            inboxData.forEach((item, index) => {
                 const div = document.createElement('div');
-                div.className = 'req-item';
-                div.innerHTML = `
-                    <div style="color:var(--gold)">From: ${req.from}</div>
-                    <div>Target: <b>${req.target}</b></div>
-                    <div style="color:#aaa; margin-bottom:5px;">"${req.reason}"</div>
-                    <div class="req-actions">
-                        <button class="btn" style="padding:4px 10px; font-size:10px; background:var(--green); color:black;" onclick="alert('Approved'); kickRequests.splice(${idx},1); renderInbox();">✔</button>
-                        <button class="btn" style="padding:4px 10px; font-size:10px; background:var(--red); color:white;" onclick="kickRequests.splice(${idx},1); renderInbox();">✖</button>
-                    </div>
-                `;
+                
+                if(item.type === 'recruit') {
+                    // JOB APPLICATION CARD
+                    div.className = 'inbox-item recruit';
+                    div.innerHTML = `
+                        <div style="color:var(--primary); font-weight:bold;">📝 Staff Application</div>
+                        <div>Applicant: <b>${item.from}</b></div>
+                        <div style="color:#aaa; font-style:italic;">"${item.text}"</div>
+                        <div class="req-actions">
+                            <button class="btn" style="padding:4px 10px; font-size:10px; background:var(--green); color:black;" onclick="resolveAction(${index}, 'Hired')">HIRE</button>
+                            <button class="btn" style="padding:4px 10px; font-size:10px; background:#333; color:white;" onclick="resolveAction(${index}, 'Rejected')">REJECT</button>
+                        </div>
+                    `;
+                } else {
+                    // SECURITY ALERT CARD
+                    div.className = 'inbox-item alert';
+                    div.innerHTML = `
+                        <div style="color:var(--red); font-weight:bold;">⚠️ Kick Request</div>
+                        <div>From: ${item.from} | Target: <b>${item.target}</b></div>
+                        <div style="color:#aaa;">Reason: "${item.text}"</div>
+                        <div class="req-actions">
+                            <button class="btn" style="padding:4px 10px; font-size:10px; background:var(--red); color:white;" onclick="resolveAction(${index}, 'Approved')">APPROVE</button>
+                            <button class="btn" style="padding:4px 10px; font-size:10px; background:#333; color:white;" onclick="resolveAction(${index}, 'Denied')">DENY</button>
+                        </div>
+                    `;
+                }
                 list.appendChild(div);
             });
         }
 
-        // --- 4. CHAT SYSTEM ---
+        function resolveAction(index, action) {
+            alert("Action: " + action);
+            inboxData.splice(index, 1); // Remove from list
+            saveData();
+            renderInbox(); // Refresh UI
+        }
+
+        function saveData() {
+            localStorage.setItem('zorvaInbox', JSON.stringify(inboxData));
+        }
+
+        // --- 6. CHAT & VIEWS ---
         let activeChat = 'global';
         function switchChat(type) {
             activeChat = type;
             document.querySelectorAll('.chat-box').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            
             document.getElementById(type+'Chat').classList.add('active');
             if(type === 'global') document.querySelectorAll('.tab')[0].classList.add('active');
             else document.getElementById('staffTab').classList.add('active');
@@ -477,30 +498,23 @@
             if(e.key === 'Enter') {
                 const txt = document.getElementById('chatInput').value;
                 if(!txt) return;
-                
                 const box = document.getElementById(activeChat+'Chat');
                 const msg = document.createElement('div');
                 msg.className = 'msg';
-                
                 let color = 'white';
                 if(session.role === 'owner') color = 'var(--gold)';
                 if(session.role === 'commander') color = 'var(--orange)';
                 if(session.role === 'mod') color = 'var(--green)';
-
                 msg.innerHTML = `<span style="color:${color}; font-weight:bold;">${session.user}:</span> ${txt}`;
                 box.appendChild(msg);
                 document.getElementById('chatInput').value = '';
-                
-                // If writing in Global, also auto-scroll
                 box.scrollTop = box.scrollHeight;
             }
         }
 
-        // --- 5. HELPERS ---
         function switchView(view) {
             document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
             document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
-            
             if(view === 'portal') {
                 document.getElementById('portalView').classList.add('active');
                 document.querySelectorAll('.menu-item')[0].classList.add('active');
