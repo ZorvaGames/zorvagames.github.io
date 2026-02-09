@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZorvaGames - Professional Platform</title>
+    <title>ZorvaGames - Live Platform</title>
     
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://images.unsplash.com; frame-src 'self';">
     <meta name="google-site-verification" content="CZ4HB0wl83PJNnk7KpUVhwCcmTqqy8CaMxF-EO0qCQA" />
@@ -21,90 +21,64 @@
             --text-sub: #a4b0be;
         }
 
-        body {
-            margin: 0;
-            background-color: var(--dark);
-            color: white;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
+        body { margin: 0; background-color: var(--dark); color: white; font-family: 'Segoe UI', sans-serif; display: flex; height: 100vh; overflow: hidden; }
 
         /* --- SIDEBAR --- */
-        .sidebar {
-            width: 280px;
-            background-color: var(--panel);
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid #222;
-        }
-
-        .logo { 
-            font-size: 26px; font-weight: 900; padding: 20px; color: white; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #222;
-        }
+        .sidebar { width: 280px; background-color: var(--panel); display: flex; flex-direction: column; border-right: 1px solid #222; }
+        .logo { font-size: 26px; font-weight: 900; padding: 20px; color: white; cursor: pointer; text-transform: uppercase; border-bottom: 1px solid #222; }
         .logo span { color: var(--primary); }
-
         .nav-links { padding: 10px 0; overflow-y: auto; flex-shrink: 0; }
         .menu-item { padding: 12px 25px; color: var(--text-sub); cursor: pointer; font-weight: 600; transition:0.2s; display: flex; align-items: center; gap: 10px; }
         .menu-item:hover, .menu-item.active { background: #222; color: white; border-left: 4px solid var(--primary); padding-left: 21px; }
 
         /* --- CHAT SYSTEM --- */
-        .chat-container { margin-top: auto; border-top: 1px solid #333; background: #111; display: flex; flex-direction: column; height: 35%; }
+        .chat-container { margin-top: auto; border-top: 1px solid #333; background: #111; display: flex; flex-direction: column; height: 40%; }
         .chat-tabs { display: flex; background: #000; border-bottom: 1px solid #333; }
         .tab { flex: 1; padding: 10px; text-align: center; cursor: pointer; font-size: 11px; font-weight: bold; color: #555; text-transform: uppercase; }
         .tab.active { color: white; border-bottom: 2px solid var(--primary); background: #222; }
         .tab.staff-only { color: var(--gold); display: none; } 
-
         .chat-box { flex: 1; padding: 15px; overflow-y: auto; font-size: 12px; display: none; scroll-behavior: smooth; }
         .chat-box.active { display: block; }
         .msg { margin-bottom: 8px; line-height: 1.4; border-bottom: 1px solid #222; padding-bottom: 4px; word-wrap: break-word; }
 
         /* --- MAIN CONTENT --- */
         .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; position: relative; }
-
         .top-nav { height: 70px; background: var(--panel); display: flex; align-items: center; justify-content: space-between; padding: 0 30px; border-bottom: 1px solid #222; }
-        .search-bar { background: #000; border: 1px solid #333; padding: 10px 20px; border-radius: 30px; color: white; width: 300px; outline: none; transition: 0.3s; }
-        .search-bar:focus { border-color: var(--primary); }
-
+        .search-bar { background: #000; border: 1px solid #333; padding: 10px 20px; border-radius: 30px; color: white; width: 300px; outline: none; }
+        
+        /* BUTTONS */
         .btn-group { display: flex; align-items: center; gap: 12px; }
-        .btn { padding: 8px 18px; border-radius: 6px; cursor: pointer; font-weight: 700; border: none; font-size:12px; transition:0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .btn { padding: 8px 18px; border-radius: 6px; cursor: pointer; font-weight: 700; border: none; font-size:12px; transition:0.2s; }
         .btn:hover { transform: translateY(-2px); opacity: 0.9; }
-        .btn-primary { background-color: var(--primary); color: white; }
-        .btn-logout { background-color: var(--red); color: white; display: none; }
-        .btn-staff { background-color: var(--gold); color: black; display: none; }
-        .btn-dev { background-color: var(--dev); color: black; display: none; }
-        .btn-kick { background-color: var(--red); color: white; padding: 3px 8px; font-size: 10px; margin-left: auto; display: none; border-radius: 4px; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-logout { background: var(--red); color: white; display: none; }
+        .btn-staff { background: var(--gold); color: black; display: none; }
+        .btn-dev { background: var(--dev); color: black; display: none; }
+        .btn-kick { background: var(--red); color: white; padding: 3px 8px; font-size: 10px; margin-left: auto; border-radius: 4px; }
 
-        /* --- VIEWS --- */
+        /* VIEWS */
         .view-section { display: none; padding: 30px; animation: fadeIn 0.3s; }
         .view-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* PORTAL STYLES */
-        .game-frame { 
-            width: 100%; height: 450px; background: black; border-radius: 15px; 
-            margin-bottom: 30px; border: 1px solid #333; position: relative; 
-            display: flex; align-items: center; justify-content: center;
-            background-image: radial-gradient(circle, #222 1px, transparent 1px); background-size: 20px 20px;
-        }
-        .grid-title { font-size: 22px; font-weight: bold; margin-bottom: 20px; border-left: 4px solid var(--primary); padding-left: 15px; }
+        /* GAME GRID */
+        .game-frame { width: 100%; height: 400px; background: black; border-radius: 15px; margin-bottom: 30px; border: 1px solid #333; display: flex; align-items: center; justify-content: center; }
         .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
         .game-card { background: var(--panel); border-radius: 12px; overflow: hidden; cursor: pointer; transition: 0.3s; border: 1px solid transparent; }
-        .game-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 5px 15px rgba(108, 92, 231, 0.2); }
-        .card-img { height: 120px; background: #252525; display: flex; align-items: center; justify-content: center; font-size: 40px; }
-
-        /* DASHBOARD STYLES */
+        .game-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .card-img { height: 120px; background: #252525; display: flex; align-items: center; justify-content: center; font-size: 30px; }
+        
+        /* DASHBOARD */
         .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
         .panel { background: #1a1a1a; padding: 25px; border-radius: 12px; border: 1px solid #333; }
         .lvl1-only { border: 1px solid var(--gold); display: none; } 
-
-        /* INBOX ITEMS */
+        
+        /* INBOX */
         .inbox-item { background: #000; padding: 12px; margin-bottom: 8px; border-radius: 6px; font-size: 13px; border-left: 3px solid #555; }
-        .inbox-item.alert { border-color: var(--red); }
         .inbox-item.recruit { border-color: var(--primary); }
-        .req-actions { display: flex; gap: 5px; margin-top: 8px; }
-
+        .inbox-item.alert { border-color: var(--red); }
+        
+        /* STAFF LIST */
         .staff-row { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid #222; font-size: 13px; }
         .staff-badge { padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-right: 8px; color: black; }
 
@@ -112,20 +86,16 @@
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(5px); }
         .modal-box { background: var(--panel); padding: 35px; border-radius: 15px; width: 380px; text-align: center; border: 1px solid #444; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .inp { width: 90%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #444; color: white; border-radius: 8px; outline: none; }
-        .inp:focus { border-color: var(--primary); }
-
     </style>
 </head>
 <body>
 
     <div class="sidebar">
         <div class="logo" onclick="switchView('portal')">ZORVA<span>GAMES</span></div>
-        
         <div class="nav-links">
             <div class="menu-item active" onclick="switchView('portal')">🏠 Home</div>
             <div class="menu-item">🔥 New</div>
             <div class="menu-item">🏆 Trending</div>
-            <div class="menu-item">⚔️ Action</div>
         </div>
 
         <div class="chat-container">
@@ -133,17 +103,10 @@
                 <div class="tab active" onclick="switchChat('global')">Global 📢</div>
                 <div class="tab staff-only" id="staffTab" onclick="switchChat('staff')">Staff 🔒</div>
             </div>
-
-            <div class="chat-box active" id="globalChat">
-                <div class="msg"><span style="color:#666;">System:</span> Welcome to ZorvaGames.</div>
-                <div class="msg" id="adminBroadcast"><span style="color:var(--gold); font-weight:bold;">ADMIN:</span> Recruitment is OPEN!</div>
-            </div>
-            <div class="chat-box" id="staffChat">
-                <div class="msg"><span style="color:#666;">Encrypted Channel Established.</span></div>
-            </div>
-
+            <div class="chat-box active" id="globalChat"></div>
+            <div class="chat-box" id="staffChat"></div>
             <div id="chatInputArea" style="padding:10px; background:#000; display:none;">
-                <input type="text" id="chatInput" placeholder="Broadcast..." style="width:90%; background:#111; border:none; color:white; padding:5px; font-size:11px;" onkeypress="sendChat(event)">
+                <input type="text" id="chatInput" placeholder="Type message..." style="width:90%; background:#111; border:none; color:white; padding:5px; font-size:11px;" onkeypress="sendChat(event)">
             </div>
         </div>
     </div>
@@ -151,9 +114,8 @@
     <div class="main-content">
         <div class="top-nav">
             <input type="text" class="search-bar" placeholder="Search games...">
-            
             <div class="btn-group">
-                <button class="btn btn-primary" onclick="openModal('recruitModal')">Apply for Staff</button>
+                <button class="btn btn-primary" id="applyBtn" onclick="openModal('recruitModal')">Apply for Staff</button>
                 <button class="btn btn-dev" id="uploadBtn" onclick="openModal('uploadModal')">⬆ Upload</button>
                 <button class="btn btn-staff" id="staffBtn" onclick="switchView('admin')">⚙️ Gov Panel</button>
                 
@@ -166,55 +128,32 @@
         <div class="view-section active" id="portalView">
             <div class="game-frame">
                 <div style="text-align:center;">
-                    <h1 style="color:white; margin:0; font-size:40px; text-shadow:0 0 20px var(--primary);">TANK DUEL</h1>
-                    <p style="color:#888;">Multiplayer • Free • No Download</p>
-                    <button class="btn btn-primary" style="margin-top:10px; font-size:16px;">PLAY NOW</button>
+                    <h1 style="color:white; font-size:40px; text-shadow:0 0 20px var(--primary);">TANK DUEL</h1>
+                    <button class="btn btn-primary" style="margin-top:10px;">PLAY NOW</button>
                 </div>
             </div>
-
-            <div class="grid-title">Recommended For You</div>
-            <div class="game-grid">
-                <div class="game-card"><div class="card-img">🏎️</div><div style="padding:15px;"><b>Cyber Racer</b><br><span style="font-size:11px; color:#666;">Driving</span></div></div>
-                <div class="game-card"><div class="card-img">🧟</div><div style="padding:15px;"><b>Zombie Defense</b><br><span style="font-size:11px; color:#666;">Action</span></div></div>
-                <div class="game-card"><div class="card-img">🚀</div><div style="padding:15px;"><b>Space Wars</b><br><span style="font-size:11px; color:#666;">Shooting</span></div></div>
-                <div class="game-card"><div class="card-img">⚽</div><div style="padding:15px;"><b>Super Kicks</b><br><span style="font-size:11px; color:#666;">Sports</span></div></div>
-            </div>
+            <h2 style="border-left:4px solid var(--primary); padding-left:15px;">Game Library</h2>
+            <div class="game-grid" id="gameGrid">
+                </div>
         </div>
 
         <div class="view-section" id="adminView">
-            <h1 style="color: var(--gold); border-bottom:1px solid #333; padding-bottom:15px;">🏛️ Government Console</h1>
-            
+            <h1 style="color:var(--gold); border-bottom:1px solid #333; padding-bottom:15px;">🏛️ Government Console</h1>
             <div class="dash-grid">
                 <div class="panel lvl1-only" id="inboxPanel">
-                    <h3 style="color:var(--gold); margin-top:0;">📨 Action Center</h3>
-                    <div style="font-size:11px; color:#666; margin-bottom:10px;">Security Alerts & Staff Applications</div>
-                    <div id="actionList" style="color:#666; font-style:italic;">No pending actions.</div>
+                    <h3 style="color:var(--gold); margin-top:0;">📨 Management Inbox</h3>
+                    <div id="actionList"></div>
                 </div>
 
-                <div class="panel lvl1-only" id="codePanel">
+                <div class="panel lvl1-only">
                     <h3 style="color:var(--gold); margin-top:0;">🔑 Nuclear Codes</h3>
-                    <p style="font-size:12px; color:#888;">Generate one-time kick authorization.</p>
                     <button class="btn" style="background:var(--gold); color:black;" onclick="genCode()">GENERATE</button>
                     <span id="codeDisplay" style="font-family:monospace; font-size:18px; color:white; margin-left:10px;"></span>
                 </div>
 
                 <div class="panel" style="grid-column: span 2;">
-                    <h3>Active Personnel</h3>
-                    <div id="staffList">
-                        <div class="staff-row"><div><span class="staff-badge" style="background:var(--gold);">OWNER</span> You (Level 1)</div></div>
-                        <div class="staff-row">
-                            <div><span class="staff-badge" style="background:var(--orange);">CMDR</span> Commander (Level 2)</div>
-                            <button class="btn-kick" onclick="tryKick('admin', 'Commander')">KICK</button>
-                        </div>
-                        <div class="staff-row">
-                            <div><span class="staff-badge" style="background:var(--green);">MOD</span> Moderator (Level 3)</div>
-                            <button class="btn-kick" onclick="tryKick('admin', 'Moderator')">KICK</button>
-                        </div>
-                        <div class="staff-row">
-                            <div><span class="staff-badge" style="background:#555; color:white;">USER</span> BadPlayer123</div>
-                            <button class="btn-kick" onclick="tryKick('user', 'BadPlayer123')">KICK</button>
-                        </div>
-                    </div>
+                    <h3>Active Database</h3>
+                    <div id="staffListDisplay"></div>
                 </div>
             </div>
         </div>
@@ -222,187 +161,375 @@
 
     <div class="modal" id="loginModal">
         <div class="modal-box">
-            <h2 style="color:white;">System Login</h2>
-            <p style="color:#777; font-size:11px; margin-bottom:20px;">owner/zorva | commander/1234 | mod/1234 | dev/1234</p>
+            <h2>System Login</h2>
+            <p style="font-size:11px; color:#aaa;">Default: owner/zorva</p>
             <input type="text" id="uName" class="inp" placeholder="Username">
             <input type="password" id="pWord" class="inp" placeholder="Password">
-            <div style="margin-top:20px;">
-                <button class="btn btn-primary" onclick="login()">ACCESS</button>
-                <button class="btn" onclick="closeModal('loginModal')" style="background:transparent; color:#777;">Cancel</button>
-            </div>
+            <button class="btn btn-primary" style="margin-top:15px;" onclick="login()">ACCESS</button>
+            <button class="btn" onclick="closeModal('loginModal')" style="background:transparent; color:#777;">Cancel</button>
         </div>
     </div>
 
     <div class="modal" id="recruitModal">
         <div class="modal-box">
             <h2 style="color:var(--primary);">Staff Application</h2>
-            <p style="font-size:12px; color:#aaa;">Applications are sent directly to the Owner.</p>
             <input type="text" id="appReason" class="inp" placeholder="Why should we hire you?">
-            <div style="margin-top:20px;">
-                <button class="btn btn-primary" onclick="submitApp()">SUBMIT</button>
-                <button class="btn" onclick="closeModal('recruitModal')" style="background:transparent; color:#777;">Cancel</button>
-            </div>
+            <button class="btn btn-primary" style="margin-top:15px;" onclick="submitApp()">SEND</button>
+            <button class="btn" onclick="closeModal('recruitModal')" style="background:transparent; color:#777;">Cancel</button>
         </div>
     </div>
 
     <div class="modal" id="uploadModal">
         <div class="modal-box">
-            <h2 style="color:var(--dev);">Developer Upload</h2>
-            <input type="file" class="inp">
-            <button class="btn" style="background:var(--dev); color:black;" onclick="alert('Uploaded!'); closeModal('uploadModal')">SUBMIT</button>
+            <h2 style="color:var(--dev);">Upload Game</h2>
+            <input type="text" id="gameTitle" class="inp" placeholder="Game Title">
+            <input type="text" id="gameCat" class="inp" placeholder="Category (Action, Racing...)">
+            <button class="btn" style="background:var(--dev); color:black; margin-top:15px;" onclick="uploadGame()">PUBLISH</button>
             <button class="btn" onclick="closeModal('uploadModal')" style="background:transparent; color:#777;">Cancel</button>
         </div>
     </div>
 
     <div class="modal" id="kickChoiceModal">
         <div class="modal-box">
-            <h2 style="color:var(--red);">⚠️ Kicking Admin</h2>
-            <p>Authorization is required.</p>
-            <div style="display:flex; gap:10px; justify-content:center; margin-top:20px;">
+            <h2 style="color:var(--red);">⚠️ Admin Kick</h2>
+            <p>Authorization Required</p>
+            <div style="display:flex; gap:10px; justify-content:center; margin-top:15px;">
                 <button class="btn btn-primary" onclick="openModal('codeModal'); closeModal('kickChoiceModal')">Use Code</button>
                 <button class="btn" style="background:var(--orange); color:black;" onclick="openModal('permModal'); closeModal('kickChoiceModal')">Ask Permission</button>
             </div>
-            <button class="btn" onclick="closeModal('kickChoiceModal')" style="background:transparent; color:#777; margin-top:10px;">Cancel</button>
+            <button class="btn" onclick="closeModal('kickChoiceModal')" style="background:transparent; color:#777;">Cancel</button>
         </div>
     </div>
 
     <div class="modal" id="codeModal">
         <div class="modal-box">
-            <h3>Enter Authorization Code</h3>
+            <h3>Enter Code</h3>
             <input type="text" id="kickCodeInput" class="inp" placeholder="XXXX-XXXX">
-            <button class="btn btn-primary" onclick="runCodeKick()">CONFIRM</button>
+            <button class="btn btn-primary" style="margin-top:15px;" onclick="runCodeKick()">CONFIRM</button>
             <button class="btn" onclick="closeModal('codeModal')" style="background:transparent; color:#777;">Cancel</button>
         </div>
     </div>
 
     <div class="modal" id="permModal">
         <div class="modal-box">
-            <h3>Request Permission</h3>
-            <input type="text" id="kickReason" class="inp" placeholder="Reason for kicking...">
-            <button class="btn" style="background:var(--orange); color:black;" onclick="runPermReq()">SEND REQUEST</button>
+            <h3>Reason</h3>
+            <input type="text" id="kickReason" class="inp" placeholder="Why kick them?">
+            <button class="btn" style="background:var(--orange); color:black; margin-top:15px;" onclick="runPermReq()">SEND</button>
             <button class="btn" onclick="closeModal('permModal')" style="background:transparent; color:#777;">Cancel</button>
         </div>
     </div>
 
     <script>
-        // --- GLOBAL STATE ---
-        let session = { user: 'Guest', role: 'guest' };
-        let activeTarget = '';
-        let validCode = '';
-        
-        // --- PERSISTENT DATABASE (The Logic Fix) ---
-        // We load lists from localStorage so they survive a refresh
-        let inboxData = JSON.parse(localStorage.getItem('zorvaInbox')) || [];
-
-        // --- 1. STARTUP & SESSION ---
-        window.onload = function() {
-            const savedUser = localStorage.getItem('zorvaUser');
-            const savedRole = localStorage.getItem('zorvaRole');
-            if(savedUser && savedRole) {
-                session.user = savedUser;
-                session.role = savedRole;
-                updateUI();
-            }
+        // --- DATA INITIALIZATION (The "Backend" in Frontend) ---
+        const DB = {
+            users: JSON.parse(localStorage.getItem('db_users')) || [
+                { name: 'Owner', role: 'owner', pass: 'zorva' },
+                { name: 'Commander', role: 'commander', pass: '1234' },
+                { name: 'Moderator', role: 'mod', pass: '1234' },
+                { name: 'BadUser123', role: 'user', pass: '1234' }
+            ],
+            games: JSON.parse(localStorage.getItem('db_games')) || [
+                { title: 'Cyber Racer', cat: 'Driving', icon: '🏎️' },
+                { title: 'Zombie Def', cat: 'Action', icon: '🧟' },
+                { title: 'Space Wars', cat: 'Shooting', icon: '🚀' }
+            ],
+            inbox: JSON.parse(localStorage.getItem('db_inbox')) || [],
+            chat: JSON.parse(localStorage.getItem('db_chat')) || [],
+            banned: JSON.parse(localStorage.getItem('db_banned')) || []
         };
 
+        let session = { user: null, role: null };
+        let activeTarget = '';
+        let validCode = '';
+
+        // --- CORE FUNCTIONS ---
+        function saveDB() {
+            localStorage.setItem('db_users', JSON.stringify(DB.users));
+            localStorage.setItem('db_games', JSON.stringify(DB.games));
+            localStorage.setItem('db_inbox', JSON.stringify(DB.inbox));
+            localStorage.setItem('db_chat', JSON.stringify(DB.chat));
+            localStorage.setItem('db_banned', JSON.stringify(DB.banned));
+            renderAll();
+        }
+
+        window.onload = function() {
+            const u = localStorage.getItem('activeUser');
+            if(u) {
+                const userObj = DB.users.find(x => x.name === u);
+                if(userObj) { session.user = userObj.name; session.role = userObj.role; }
+            }
+            renderAll();
+            updateUI();
+        };
+
+        function renderAll() {
+            renderGames();
+            renderStaffList();
+            renderInbox();
+            renderChat();
+        }
+
+        // --- 1. GAME LOGIC ---
+        function renderGames() {
+            const grid = document.getElementById('gameGrid');
+            grid.innerHTML = '';
+            DB.games.forEach(g => {
+                grid.innerHTML += `
+                    <div class="game-card">
+                        <div class="card-img">${g.icon}</div>
+                        <div style="padding:15px;">
+                            <b>${g.title}</b><br>
+                            <span style="font-size:11px; color:#666;">${g.cat}</span>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function uploadGame() {
+            const t = document.getElementById('gameTitle').value;
+            const c = document.getElementById('gameCat').value;
+            if(!t || !c) return alert("Fill all fields");
+            
+            DB.games.push({ title: t, cat: c, icon: '🎮' });
+            saveDB();
+            closeModal('uploadModal');
+            alert("Game Published Live!");
+        }
+
+        // --- 2. USER LOGIC ---
         function login() {
             const u = document.getElementById('uName').value;
             const p = document.getElementById('pWord').value;
 
-            if (u === 'owner' && p === 'zorva') session.role = 'owner';
-            else if (u === 'commander' && p === '1234') session.role = 'commander';
-            else if (u === 'mod' && p === '1234') session.role = 'mod';
-            else if (u === 'dev' && p === '1234') session.role = 'dev';
-            else session.role = 'user';
+            // Check Banned
+            if(DB.banned.includes(u)) return alert("ACCOUNT BANNED");
 
-            session.user = u;
-            localStorage.setItem('zorvaUser', session.user);
-            localStorage.setItem('zorvaRole', session.role);
+            // Check DB
+            const userFound = DB.users.find(x => x.name === u && x.pass === p);
             
-            updateUI();
-            closeModal('loginModal');
+            if(userFound) {
+                session.user = userFound.name;
+                session.role = userFound.role;
+                localStorage.setItem('activeUser', session.user);
+                updateUI();
+                closeModal('loginModal');
+            } else {
+                // Register new guest
+                session.user = u;
+                session.role = 'user';
+                DB.users.push({name: u, role: 'user', pass: p}); // Auto-register
+                saveDB();
+                localStorage.setItem('activeUser', session.user);
+                updateUI();
+                closeModal('loginModal');
+            }
         }
 
         function logout() {
-            localStorage.removeItem('zorvaUser');
-            localStorage.removeItem('zorvaRole');
+            localStorage.removeItem('activeUser');
             location.reload();
         }
 
-        // --- 2. UI MANAGER ---
-        function updateUI() {
-            document.getElementById('loginBtn').style.display = 'none';
-            document.getElementById('logoutBtn').style.display = 'block';
-            const disp = document.getElementById('userDisplay');
-            disp.style.display = 'inline-block';
-            
-            // Reset Admin Elements
-            document.getElementById('staffBtn').style.display = 'none';
-            document.getElementById('uploadBtn').style.display = 'none';
-            document.getElementById('staffTab').style.display = 'none';
-            document.getElementById('chatInputArea').style.display = 'none';
-            document.querySelectorAll('.lvl1-only').forEach(e => e.style.display = 'none');
-            document.querySelectorAll('.btn-kick').forEach(e => e.style.display = 'none');
+        // --- 3. STAFF & KICK LOGIC ---
+        function renderStaffList() {
+            const list = document.getElementById('staffListDisplay');
+            list.innerHTML = '';
+            DB.users.forEach(u => {
+                let badge = '';
+                if(u.role === 'owner') badge = `<span class="staff-badge" style="background:var(--gold)">OWNER</span>`;
+                else if(u.role === 'commander') badge = `<span class="staff-badge" style="background:var(--orange)">CMDR</span>`;
+                else if(u.role === 'mod') badge = `<span class="staff-badge" style="background:var(--green)">MOD</span>`;
+                else badge = `<span class="staff-badge" style="background:#555; color:white;">USER</span>`;
 
-            // Apply Powers
-            let prefix = ''; let color = 'white';
-            if(session.role === 'owner') {
-                prefix = '👑 '; color = 'var(--gold)';
-                enableAdminFeatures(true); 
-            } else if (session.role === 'commander') {
-                prefix = '⚔️ '; color = 'var(--orange)';
-                enableAdminFeatures(false);
-            } else if (session.role === 'mod') {
-                prefix = '🛡️ '; color = 'var(--green)';
-                enableAdminFeatures(false);
-            } else if (session.role === 'dev') {
-                prefix = '🛠️ '; color = 'var(--dev)';
-                document.getElementById('uploadBtn').style.display = 'block';
-            }
+                // Logic: Only show KICK button if viewer has power
+                let btn = '';
+                if(session.role === 'owner' || session.role === 'commander' || session.role === 'mod') {
+                    if(u.role !== 'owner') { // Can't kick owner
+                        btn = `<button class="btn-kick" onclick="initKick('${u.name}', '${u.role}')">KICK</button>`;
+                    }
+                }
 
-            disp.innerHTML = `<span style="color:${color}">${prefix}${session.user}</span>`;
+                list.innerHTML += `<div class="staff-row"><div>${badge} ${u.name}</div>${btn}</div>`;
+            });
         }
 
-        function enableAdminFeatures(isOwner) {
-            document.getElementById('staffBtn').style.display = 'block';
-            document.getElementById('staffTab').style.display = 'block';
-            document.getElementById('chatInputArea').style.display = 'block';
-            document.querySelectorAll('.btn-kick').forEach(e => e.style.display = 'block');
-            if(isOwner) {
-                document.querySelectorAll('.lvl1-only').forEach(e => e.style.display = 'block');
-                renderInbox(); // Show the persisted messages
-            }
-        }
-
-        // --- 3. RECRUITMENT LOGIC (New Feature) ---
-        function submitApp() {
-            const reason = document.getElementById('appReason').value;
-            if(!reason) return alert("Please write a reason!");
-            
-            // Add to database
-            const newItem = {
-                type: 'recruit',
-                from: session.user,
-                text: reason,
-                id: Date.now()
-            };
-            
-            inboxData.push(newItem);
-            saveData(); // Save to localStorage
-            
-            alert("Application Sent! The Owner will see it in their console.");
-            closeModal('recruitModal');
-        }
-
-        // --- 4. KICK LOGIC & INBOX ---
-        function tryKick(type, name) {
+        function initKick(name, role) {
             activeTarget = name;
-            if(type === 'user') {
-                if(confirm(`Kick user ${name}?`)) alert("User removed.");
+            if(role === 'user') {
+                if(confirm("Kick " + name + "?")) performKick(name);
             } else {
-                if(session.role === 'owner') alert("OWNER OVERRIDE: " + name + " removed.");
+                if(session.role === 'owner') performKick(name);
                 else openModal('kickChoiceModal');
             }
+        }
+
+        function performKick(name) {
+            DB.users = DB.users.filter(u => u.name !== name);
+            DB.banned.push(name);
+            saveDB();
+            alert(name + " has been banned.");
+        }
+
+        // --- 4. INBOX & RECRUITMENT LOGIC ---
+        function submitApp() {
+            const r = document.getElementById('appReason').value;
+            DB.inbox.push({ type: 'recruit', from: session.user, text: r });
+            saveDB();
+            closeModal('recruitModal');
+            alert("Application Sent to Owner!");
+        }
+
+        function runPermReq() {
+            const r = document.getElementById('kickReason').value;
+            DB.inbox.push({ type: 'alert', from: session.user, target: activeTarget, text: r });
+            saveDB();
+            closeModal('permModal');
+            alert("Request Sent.");
+        }
+
+        function renderInbox() {
+            const list = document.getElementById('actionList');
+            if(DB.inbox.length === 0) return list.innerHTML = '<div style="color:#666">No actions.</div>';
+            list.innerHTML = '';
+
+            DB.inbox.forEach((item, idx) => {
+                if(item.type === 'recruit') {
+                    list.innerHTML += `
+                    <div class="inbox-item recruit">
+                        <div style="color:var(--primary); font-weight:bold">📝 App: ${item.from}</div>
+                        <div style="color:#ccc">"${item.text}"</div>
+                        <div class="req-actions">
+                            <button class="btn" style="padding:2px 8px; background:var(--green); color:black; font-size:10px;" onclick="hireUser('${item.from}', ${idx})">HIRE</button>
+                            <button class="btn" style="padding:2px 8px; background:#333; color:white; font-size:10px;" onclick="delMsg(${idx})">IGNORE</button>
+                        </div>
+                    </div>`;
+                } else {
+                    list.innerHTML += `
+                    <div class="inbox-item alert">
+                        <div style="color:var(--red); font-weight:bold">⚠️ Kick: ${item.target}</div>
+                        <div style="color:#ccc">By ${item.from}: "${item.text}"</div>
+                        <div class="req-actions">
+                            <button class="btn" style="padding:2px 8px; background:var(--red); color:white; font-size:10px;" onclick="performKick('${item.target}'); delMsg(${idx})">APPROVE</button>
+                            <button class="btn" style="padding:2px 8px; background:#333; color:white; font-size:10px;" onclick="delMsg(${idx})">DENY</button>
+                        </div>
+                    </div>`;
+                }
+            });
+        }
+
+        function hireUser(name, msgIdx) {
+            const u = DB.users.find(x => x.name === name);
+            if(u) {
+                u.role = 'mod'; // Promote to Mod
+                saveDB();
+                delMsg(msgIdx);
+                alert(name + " promoted to Staff!");
+            }
+        }
+
+        function delMsg(idx) {
+            DB.inbox.splice(idx, 1);
+            saveDB();
+        }
+
+        // --- 5. CHAT LOGIC ---
+        function renderChat() {
+            const g = document.getElementById('globalChat');
+            const s = document.getElementById('staffChat');
+            g.innerHTML = ''; s.innerHTML = '';
+
+            DB.chat.forEach(m => {
+                let color = 'white';
+                if(m.role === 'owner') color = 'var(--gold)';
+                else if(m.role === 'commander') color = 'var(--orange)';
+                else if(m.role === 'mod') color = 'var(--green)';
+                
+                const html = `<div class="msg"><span style="color:${color}; font-weight:bold">${m.from}:</span> ${m.text}</div>`;
+                
+                if(m.channel === 'global') g.innerHTML += html;
+                else s.innerHTML += html;
+            });
+        }
+
+        function sendChat(e) {
+            if(e.key === 'Enter') {
+                const txt = document.getElementById('chatInput').value;
+                if(!txt) return;
+                
+                // Determine active channel based on tab visibility
+                const isGlobal = document.getElementById('globalChat').style.display !== 'none';
+                DB.chat.push({
+                    channel: isGlobal ? 'global' : 'staff',
+                    from: session.user,
+                    role: session.role,
+                    text: txt
+                });
+                saveDB();
+                document.getElementById('chatInput').value = '';
+                
+                // Scroll to bottom
+                const box = isGlobal ? document.getElementById('globalChat') : document.getElementById('staffChat');
+                box.scrollTop = box.scrollHeight;
+            }
+        }
+
+        // --- 6. UI HELPERS ---
+        function updateUI() {
+            const loginBtn = document.getElementById('loginBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const userDisp = document.getElementById('userDisplay');
+            
+            if(session.user) {
+                loginBtn.style.display = 'none';
+                logoutBtn.style.display = 'block';
+                document.getElementById('applyBtn').style.display = 'block';
+                
+                let color = 'white'; let prefix = '';
+                if(session.role === 'owner') { color = 'var(--gold)'; prefix = '👑 '; }
+                else if(session.role === 'commander') { color = 'var(--orange)'; prefix = '⚔️ '; }
+                else if(session.role === 'mod') { color = 'var(--green)'; prefix = '🛡️ '; }
+                else if(session.role === 'dev') { color = 'var(--dev)'; prefix = '🛠️ '; }
+                
+                userDisp.style.display = 'inline-block';
+                userDisp.innerHTML = `<span style="color:${color}">${prefix}${session.user}</span>`;
+
+                // Role Buttons
+                if(['owner', 'commander', 'mod'].includes(session.role)) {
+                    document.getElementById('staffBtn').style.display = 'block';
+                    document.getElementById('staffTab').style.display = 'block';
+                    document.getElementById('chatInputArea').style.display = 'block';
+                }
+                if(session.role === 'owner') document.querySelectorAll('.lvl1-only').forEach(e => e.style.display = 'block');
+                if(session.role === 'dev') document.getElementById('uploadBtn').style.display = 'block';
+
+            } else {
+                loginBtn.style.display = 'block';
+                logoutBtn.style.display = 'none';
+                userDisp.style.display = 'none';
+            }
+        }
+
+        // View Switching
+        function switchView(v) {
+            document.querySelectorAll('.view-section').forEach(e => e.classList.remove('active'));
+            document.querySelectorAll('.menu-item').forEach(e => e.classList.remove('active'));
+            if(v === 'portal') {
+                document.getElementById('portalView').classList.add('active');
+                document.querySelectorAll('.menu-item')[0].classList.add('active');
+            } else {
+                document.getElementById('adminView').classList.add('active');
+            }
+        }
+
+        let activeChat = 'global';
+        function switchChat(c) {
+            document.getElementById('globalChat').style.display = c === 'global' ? 'block' : 'none';
+            document.getElementById('staffChat').style.display = c === 'staff' ? 'block' : 'none';
+            activeChat = c;
+            // Update Tab UI
+            const tabs = document.querySelectorAll('.tab');
+            tabs[0].classList.toggle('active', c === 'global');
+            tabs[1].classList.toggle('active', c === 'staff');
         }
 
         function genCode() {
@@ -412,120 +539,13 @@
 
         function runCodeKick() {
             if(document.getElementById('kickCodeInput').value === validCode && validCode !== '') {
-                alert("✅ Code Valid. " + activeTarget + " kicked.");
+                performKick(activeTarget);
                 validCode = ''; closeModal('codeModal');
-            } else alert("❌ Invalid Code");
-        }
-
-        function runPermReq() {
-            const reason = document.getElementById('kickReason').value;
-            const newItem = {
-                type: 'alert',
-                from: session.user,
-                target: activeTarget,
-                text: reason,
-                id: Date.now()
-            };
-            inboxData.push(newItem);
-            saveData();
-            alert("📨 Request sent to Owner.");
-            closeModal('permModal');
-        }
-
-        // --- 5. RENDER INBOX (The Unified Action Center) ---
-        function renderInbox() {
-            const list = document.getElementById('actionList');
-            if(inboxData.length === 0) {
-                list.innerText = "No pending actions."; return;
-            }
-            list.innerHTML = '';
-            
-            inboxData.forEach((item, index) => {
-                const div = document.createElement('div');
-                
-                if(item.type === 'recruit') {
-                    // JOB APPLICATION CARD
-                    div.className = 'inbox-item recruit';
-                    div.innerHTML = `
-                        <div style="color:var(--primary); font-weight:bold;">📝 Staff Application</div>
-                        <div>Applicant: <b>${item.from}</b></div>
-                        <div style="color:#aaa; font-style:italic;">"${item.text}"</div>
-                        <div class="req-actions">
-                            <button class="btn" style="padding:4px 10px; font-size:10px; background:var(--green); color:black;" onclick="resolveAction(${index}, 'Hired')">HIRE</button>
-                            <button class="btn" style="padding:4px 10px; font-size:10px; background:#333; color:white;" onclick="resolveAction(${index}, 'Rejected')">REJECT</button>
-                        </div>
-                    `;
-                } else {
-                    // SECURITY ALERT CARD
-                    div.className = 'inbox-item alert';
-                    div.innerHTML = `
-                        <div style="color:var(--red); font-weight:bold;">⚠️ Kick Request</div>
-                        <div>From: ${item.from} | Target: <b>${item.target}</b></div>
-                        <div style="color:#aaa;">Reason: "${item.text}"</div>
-                        <div class="req-actions">
-                            <button class="btn" style="padding:4px 10px; font-size:10px; background:var(--red); color:white;" onclick="resolveAction(${index}, 'Approved')">APPROVE</button>
-                            <button class="btn" style="padding:4px 10px; font-size:10px; background:#333; color:white;" onclick="resolveAction(${index}, 'Denied')">DENY</button>
-                        </div>
-                    `;
-                }
-                list.appendChild(div);
-            });
-        }
-
-        function resolveAction(index, action) {
-            alert("Action: " + action);
-            inboxData.splice(index, 1); // Remove from list
-            saveData();
-            renderInbox(); // Refresh UI
-        }
-
-        function saveData() {
-            localStorage.setItem('zorvaInbox', JSON.stringify(inboxData));
-        }
-
-        // --- 6. CHAT & VIEWS ---
-        let activeChat = 'global';
-        function switchChat(type) {
-            activeChat = type;
-            document.querySelectorAll('.chat-box').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.getElementById(type+'Chat').classList.add('active');
-            if(type === 'global') document.querySelectorAll('.tab')[0].classList.add('active');
-            else document.getElementById('staffTab').classList.add('active');
-        }
-
-        function sendChat(e) {
-            if(e.key === 'Enter') {
-                const txt = document.getElementById('chatInput').value;
-                if(!txt) return;
-                const box = document.getElementById(activeChat+'Chat');
-                const msg = document.createElement('div');
-                msg.className = 'msg';
-                let color = 'white';
-                if(session.role === 'owner') color = 'var(--gold)';
-                if(session.role === 'commander') color = 'var(--orange)';
-                if(session.role === 'mod') color = 'var(--green)';
-                msg.innerHTML = `<span style="color:${color}; font-weight:bold;">${session.user}:</span> ${txt}`;
-                box.appendChild(msg);
-                document.getElementById('chatInput').value = '';
-                box.scrollTop = box.scrollHeight;
-            }
-        }
-
-        function switchView(view) {
-            document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
-            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
-            if(view === 'portal') {
-                document.getElementById('portalView').classList.add('active');
-                document.querySelectorAll('.menu-item')[0].classList.add('active');
-            } else {
-                document.getElementById('adminView').classList.add('active');
-            }
+            } else alert("Invalid Code");
         }
 
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
     </script>
 </body>
 </html>
