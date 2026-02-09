@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZorvaGames - Live Platform</title>
+    <title>ZorvaGames - God Mode</title>
     
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://images.unsplash.com; frame-src 'self';">
-    <meta name="google-site-verification" content="CZ4HB0wl83PJNnk7KpUVhwCcmTqqy8CaMxF-EO0qCQA" />
 
     <style>
         :root {
@@ -18,7 +17,6 @@
             --green: #2ecc71;  /* Mod */
             --dev: #00d2d3;    /* Developer */
             --red: #ff4757;    /* Critical */
-            --text-sub: #a4b0be;
         }
 
         body { margin: 0; background-color: var(--dark); color: white; font-family: 'Segoe UI', sans-serif; display: flex; height: 100vh; overflow: hidden; }
@@ -28,10 +26,10 @@
         .logo { font-size: 26px; font-weight: 900; padding: 20px; color: white; cursor: pointer; text-transform: uppercase; border-bottom: 1px solid #222; }
         .logo span { color: var(--primary); }
         .nav-links { padding: 10px 0; overflow-y: auto; flex-shrink: 0; }
-        .menu-item { padding: 12px 25px; color: var(--text-sub); cursor: pointer; font-weight: 600; transition:0.2s; display: flex; align-items: center; gap: 10px; }
+        .menu-item { padding: 12px 25px; color: #aaa; cursor: pointer; font-weight: 600; transition:0.2s; display: flex; align-items: center; gap: 10px; }
         .menu-item:hover, .menu-item.active { background: #222; color: white; border-left: 4px solid var(--primary); padding-left: 21px; }
 
-        /* --- CHAT SYSTEM --- */
+        /* --- CHAT --- */
         .chat-container { margin-top: auto; border-top: 1px solid #333; background: #111; display: flex; flex-direction: column; height: 40%; }
         .chat-tabs { display: flex; background: #000; border-bottom: 1px solid #333; }
         .tab { flex: 1; padding: 10px; text-align: center; cursor: pointer; font-size: 11px; font-weight: bold; color: #555; text-transform: uppercase; }
@@ -41,7 +39,7 @@
         .chat-box.active { display: block; }
         .msg { margin-bottom: 8px; line-height: 1.4; border-bottom: 1px solid #222; padding-bottom: 4px; word-wrap: break-word; }
 
-        /* --- MAIN CONTENT --- */
+        /* --- MAIN --- */
         .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; position: relative; }
         .top-nav { height: 70px; background: var(--panel); display: flex; align-items: center; justify-content: space-between; padding: 0 30px; border-bottom: 1px solid #222; }
         .search-bar { background: #000; border: 1px solid #333; padding: 10px 20px; border-radius: 30px; color: white; width: 300px; outline: none; }
@@ -52,34 +50,40 @@
         .btn:hover { transform: translateY(-2px); opacity: 0.9; }
         .btn-primary { background: var(--primary); color: white; }
         .btn-logout { background: var(--red); color: white; display: none; }
+        .btn-settings { background: #333; color: white; display: none; padding: 8px; border-radius: 50%; } /* Gear Icon */
         .btn-staff { background: var(--gold); color: black; display: none; }
         .btn-dev { background: var(--dev); color: black; display: none; }
-        .btn-kick { background: var(--red); color: white; padding: 3px 8px; font-size: 10px; margin-left: auto; border-radius: 4px; }
+        
+        /* POWER BUTTONS */
+        .action-btn { padding: 4px 8px; border-radius: 4px; border: none; cursor: pointer; font-size: 10px; font-weight: bold; margin-left: 5px; }
+        .btn-kick { background: var(--red); color: white; }
+        .btn-up { background: var(--green); color: black; }
+        .btn-down { background: var(--orange); color: black; }
 
         /* VIEWS */
         .view-section { display: none; padding: 30px; animation: fadeIn 0.3s; }
         .view-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* DASHBOARD */
+        .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .panel { background: #1a1a1a; padding: 25px; border-radius: 12px; border: 1px solid #333; }
+        .lvl1-only { border: 1px solid var(--gold); display: none; } 
+        
         /* GAME GRID */
         .game-frame { width: 100%; height: 400px; background: black; border-radius: 15px; margin-bottom: 30px; border: 1px solid #333; display: flex; align-items: center; justify-content: center; }
         .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
         .game-card { background: var(--panel); border-radius: 12px; overflow: hidden; cursor: pointer; transition: 0.3s; border: 1px solid transparent; }
         .game-card:hover { transform: translateY(-5px); border-color: var(--primary); }
         .card-img { height: 120px; background: #252525; display: flex; align-items: center; justify-content: center; font-size: 30px; }
-        
-        /* DASHBOARD */
-        .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
-        .panel { background: #1a1a1a; padding: 25px; border-radius: 12px; border: 1px solid #333; }
-        .lvl1-only { border: 1px solid var(--gold); display: none; } 
-        
+
         /* INBOX */
         .inbox-item { background: #000; padding: 12px; margin-bottom: 8px; border-radius: 6px; font-size: 13px; border-left: 3px solid #555; }
         .inbox-item.recruit { border-color: var(--primary); }
         .inbox-item.alert { border-color: var(--red); }
         
         /* STAFF LIST */
-        .staff-row { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid #222; font-size: 13px; }
+        .staff-row { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid #222; font-size: 13px; justify-content: space-between; }
         .staff-badge { padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-right: 8px; color: black; }
 
         /* MODALS */
@@ -120,6 +124,9 @@
                 <button class="btn btn-staff" id="staffBtn" onclick="switchView('admin')">⚙️ Gov Panel</button>
                 
                 <span id="userDisplay" style="display:none; font-weight:bold; margin-left:10px;">Guest</span>
+                
+                <button class="btn btn-settings" id="settingsBtn" onclick="openModal('settingsModal')">⚙️</button>
+                
                 <button class="btn btn-primary" id="loginBtn" onclick="openModal('loginModal')">Login</button>
                 <button class="btn btn-logout" id="logoutBtn" onclick="logout()">Logout</button>
             </div>
@@ -133,15 +140,14 @@
                 </div>
             </div>
             <h2 style="border-left:4px solid var(--primary); padding-left:15px;">Game Library</h2>
-            <div class="game-grid" id="gameGrid">
-                </div>
+            <div class="game-grid" id="gameGrid"></div>
         </div>
 
         <div class="view-section" id="adminView">
             <h1 style="color:var(--gold); border-bottom:1px solid #333; padding-bottom:15px;">🏛️ Government Console</h1>
             <div class="dash-grid">
                 <div class="panel lvl1-only" id="inboxPanel">
-                    <h3 style="color:var(--gold); margin-top:0;">📨 Management Inbox</h3>
+                    <h3 style="color:var(--gold); margin-top:0;">📨 Action Center</h3>
                     <div id="actionList"></div>
                 </div>
 
@@ -152,7 +158,7 @@
                 </div>
 
                 <div class="panel" style="grid-column: span 2;">
-                    <h3>Active Database</h3>
+                    <h3>Active Personnel</h3>
                     <div id="staffListDisplay"></div>
                 </div>
             </div>
@@ -170,6 +176,16 @@
         </div>
     </div>
 
+    <div class="modal" id="settingsModal">
+        <div class="modal-box">
+            <h2>Account Settings</h2>
+            <p style="color:#aaa; font-size:12px;">Update your credentials.</p>
+            <input type="password" id="newPass" class="inp" placeholder="New Password">
+            <button class="btn btn-primary" style="margin-top:15px;" onclick="changePassword()">UPDATE PASSWORD</button>
+            <button class="btn" onclick="closeModal('settingsModal')" style="background:transparent; color:#777;">Cancel</button>
+        </div>
+    </div>
+
     <div class="modal" id="recruitModal">
         <div class="modal-box">
             <h2 style="color:var(--primary);">Staff Application</h2>
@@ -183,7 +199,7 @@
         <div class="modal-box">
             <h2 style="color:var(--dev);">Upload Game</h2>
             <input type="text" id="gameTitle" class="inp" placeholder="Game Title">
-            <input type="text" id="gameCat" class="inp" placeholder="Category (Action, Racing...)">
+            <input type="text" id="gameCat" class="inp" placeholder="Category">
             <button class="btn" style="background:var(--dev); color:black; margin-top:15px;" onclick="uploadGame()">PUBLISH</button>
             <button class="btn" onclick="closeModal('uploadModal')" style="background:transparent; color:#777;">Cancel</button>
         </div>
@@ -220,17 +236,16 @@
     </div>
 
     <script>
-        // --- DATA INITIALIZATION (The "Backend" in Frontend) ---
+        // --- DATA LAYER ---
         const DB = {
             users: JSON.parse(localStorage.getItem('db_users')) || [
                 { name: 'Owner', role: 'owner', pass: 'zorva' },
                 { name: 'Commander', role: 'commander', pass: '1234' },
                 { name: 'Moderator', role: 'mod', pass: '1234' },
-                { name: 'BadUser123', role: 'user', pass: '1234' }
+                { name: 'BadUser', role: 'user', pass: '1234' }
             ],
             games: JSON.parse(localStorage.getItem('db_games')) || [
                 { title: 'Cyber Racer', cat: 'Driving', icon: '🏎️' },
-                { title: 'Zombie Def', cat: 'Action', icon: '🧟' },
                 { title: 'Space Wars', cat: 'Shooting', icon: '🚀' }
             ],
             inbox: JSON.parse(localStorage.getItem('db_inbox')) || [],
@@ -242,7 +257,6 @@
         let activeTarget = '';
         let validCode = '';
 
-        // --- CORE FUNCTIONS ---
         function saveDB() {
             localStorage.setItem('db_users', JSON.stringify(DB.users));
             localStorage.setItem('db_games', JSON.stringify(DB.games));
@@ -269,44 +283,26 @@
             renderChat();
         }
 
-        // --- 1. GAME LOGIC ---
-        function renderGames() {
-            const grid = document.getElementById('gameGrid');
-            grid.innerHTML = '';
-            DB.games.forEach(g => {
-                grid.innerHTML += `
-                    <div class="game-card">
-                        <div class="card-img">${g.icon}</div>
-                        <div style="padding:15px;">
-                            <b>${g.title}</b><br>
-                            <span style="font-size:11px; color:#666;">${g.cat}</span>
-                        </div>
-                    </div>`;
-            });
-        }
-
-        function uploadGame() {
-            const t = document.getElementById('gameTitle').value;
-            const c = document.getElementById('gameCat').value;
-            if(!t || !c) return alert("Fill all fields");
+        // --- ACCOUNT MANAGEMENT ---
+        function changePassword() {
+            const newP = document.getElementById('newPass').value;
+            if(!newP) return alert("Enter a password!");
             
-            DB.games.push({ title: t, cat: c, icon: '🎮' });
-            saveDB();
-            closeModal('uploadModal');
-            alert("Game Published Live!");
+            const userIdx = DB.users.findIndex(u => u.name === session.user);
+            if(userIdx !== -1) {
+                DB.users[userIdx].pass = newP; // UPDATE PASSWORD
+                saveDB();
+                alert("Password Updated Successfully!");
+                closeModal('settingsModal');
+            }
         }
 
-        // --- 2. USER LOGIC ---
         function login() {
             const u = document.getElementById('uName').value;
             const p = document.getElementById('pWord').value;
-
-            // Check Banned
             if(DB.banned.includes(u)) return alert("ACCOUNT BANNED");
-
-            // Check DB
-            const userFound = DB.users.find(x => x.name === u && x.pass === p);
             
+            const userFound = DB.users.find(x => x.name === u && x.pass === p);
             if(userFound) {
                 session.user = userFound.name;
                 session.role = userFound.role;
@@ -314,14 +310,17 @@
                 updateUI();
                 closeModal('loginModal');
             } else {
-                // Register new guest
-                session.user = u;
-                session.role = 'user';
-                DB.users.push({name: u, role: 'user', pass: p}); // Auto-register
-                saveDB();
-                localStorage.setItem('activeUser', session.user);
-                updateUI();
-                closeModal('loginModal');
+                // Register Guest
+                if(!DB.users.find(x => x.name === u)) {
+                    session.user = u; session.role = 'user';
+                    DB.users.push({name: u, role: 'user', pass: p});
+                    saveDB();
+                    localStorage.setItem('activeUser', session.user);
+                    updateUI();
+                    closeModal('loginModal');
+                } else {
+                    alert("Wrong Password");
+                }
             }
         }
 
@@ -330,10 +329,11 @@
             location.reload();
         }
 
-        // --- 3. STAFF & KICK LOGIC ---
+        // --- POWER MANAGEMENT (Promote/Demote) ---
         function renderStaffList() {
             const list = document.getElementById('staffListDisplay');
             list.innerHTML = '';
+            
             DB.users.forEach(u => {
                 let badge = '';
                 if(u.role === 'owner') badge = `<span class="staff-badge" style="background:var(--gold)">OWNER</span>`;
@@ -341,147 +341,132 @@
                 else if(u.role === 'mod') badge = `<span class="staff-badge" style="background:var(--green)">MOD</span>`;
                 else badge = `<span class="staff-badge" style="background:#555; color:white;">USER</span>`;
 
-                // Logic: Only show KICK button if viewer has power
-                let btn = '';
-                if(session.role === 'owner' || session.role === 'commander' || session.role === 'mod') {
-                    if(u.role !== 'owner') { // Can't kick owner
-                        btn = `<button class="btn-kick" onclick="initKick('${u.name}', '${u.role}')">KICK</button>`;
-                    }
+                let controls = '';
+                if(session.role === 'owner' && u.role !== 'owner') {
+                    // Owner controls
+                    controls += `<button class="action-btn btn-up" onclick="changeRole('${u.name}', 'up')">⬆</button>`;
+                    controls += `<button class="action-btn btn-down" onclick="changeRole('${u.name}', 'down')">⬇</button>`;
+                    controls += `<button class="action-btn btn-kick" onclick="performKick('${u.name}')">✖</button>`;
+                } else if((session.role === 'commander' || session.role === 'mod') && u.role === 'user') {
+                    // Staff controls for users
+                    controls += `<button class="action-btn btn-kick" onclick="initKick('${u.name}', '${u.role}')">✖</button>`;
                 }
 
-                list.innerHTML += `<div class="staff-row"><div>${badge} ${u.name}</div>${btn}</div>`;
+                list.innerHTML += `<div class="staff-row"><div>${badge} ${u.name}</div><div>${controls}</div></div>`;
             });
+        }
+
+        function changeRole(name, dir) {
+            const u = DB.users.find(x => x.name === name);
+            if(!u) return;
+            
+            const hierarchy = ['user', 'mod', 'commander', 'owner'];
+            let currentIdx = hierarchy.indexOf(u.role);
+            
+            if(dir === 'up') {
+                if(currentIdx < 2) u.role = hierarchy[currentIdx + 1]; // Promote
+            } else {
+                if(currentIdx > 0) u.role = hierarchy[currentIdx - 1]; // Demote
+            }
+            saveDB();
+        }
+
+        // --- STANDARD LOGIC ---
+        function renderGames() {
+            const grid = document.getElementById('gameGrid');
+            grid.innerHTML = '';
+            DB.games.forEach(g => {
+                grid.innerHTML += `<div class="game-card"><div class="card-img">${g.icon}</div><div style="padding:15px;"><b>${g.title}</b><br><span style="font-size:11px; color:#666;">${g.cat}</span></div></div>`;
+            });
+        }
+        function uploadGame() {
+            const t = document.getElementById('gameTitle').value;
+            const c = document.getElementById('gameCat').value;
+            if(!t) return;
+            DB.games.push({ title: t, cat: c, icon: '🎮' });
+            saveDB();
+            closeModal('uploadModal');
+            alert("Published!");
         }
 
         function initKick(name, role) {
             activeTarget = name;
             if(role === 'user') {
                 if(confirm("Kick " + name + "?")) performKick(name);
-            } else {
-                if(session.role === 'owner') performKick(name);
-                else openModal('kickChoiceModal');
-            }
+            } else openModal('kickChoiceModal');
         }
 
         function performKick(name) {
             DB.users = DB.users.filter(u => u.name !== name);
             DB.banned.push(name);
             saveDB();
-            alert(name + " has been banned.");
+            alert(name + " Banned.");
         }
 
-        // --- 4. INBOX & RECRUITMENT LOGIC ---
+        // --- INBOX ---
         function submitApp() {
             const r = document.getElementById('appReason').value;
             DB.inbox.push({ type: 'recruit', from: session.user, text: r });
-            saveDB();
-            closeModal('recruitModal');
-            alert("Application Sent to Owner!");
+            saveDB(); closeModal('recruitModal'); alert("Sent!");
         }
-
         function runPermReq() {
             const r = document.getElementById('kickReason').value;
             DB.inbox.push({ type: 'alert', from: session.user, target: activeTarget, text: r });
-            saveDB();
-            closeModal('permModal');
-            alert("Request Sent.");
+            saveDB(); closeModal('permModal'); alert("Request Sent.");
         }
-
         function renderInbox() {
             const list = document.getElementById('actionList');
             if(DB.inbox.length === 0) return list.innerHTML = '<div style="color:#666">No actions.</div>';
             list.innerHTML = '';
-
             DB.inbox.forEach((item, idx) => {
                 if(item.type === 'recruit') {
-                    list.innerHTML += `
-                    <div class="inbox-item recruit">
-                        <div style="color:var(--primary); font-weight:bold">📝 App: ${item.from}</div>
-                        <div style="color:#ccc">"${item.text}"</div>
-                        <div class="req-actions">
-                            <button class="btn" style="padding:2px 8px; background:var(--green); color:black; font-size:10px;" onclick="hireUser('${item.from}', ${idx})">HIRE</button>
-                            <button class="btn" style="padding:2px 8px; background:#333; color:white; font-size:10px;" onclick="delMsg(${idx})">IGNORE</button>
-                        </div>
-                    </div>`;
+                    list.innerHTML += `<div class="inbox-item recruit"><div style="color:var(--primary); font-weight:bold">📝 App: ${item.from}</div><div style="color:#ccc">"${item.text}"</div><div class="req-actions"><button class="btn" style="padding:2px 8px; background:var(--green); color:black; font-size:10px;" onclick="hireUser('${item.from}', ${idx})">HIRE</button><button class="btn" style="padding:2px 8px; background:#333; color:white; font-size:10px;" onclick="delMsg(${idx})">IGNORE</button></div></div>`;
                 } else {
-                    list.innerHTML += `
-                    <div class="inbox-item alert">
-                        <div style="color:var(--red); font-weight:bold">⚠️ Kick: ${item.target}</div>
-                        <div style="color:#ccc">By ${item.from}: "${item.text}"</div>
-                        <div class="req-actions">
-                            <button class="btn" style="padding:2px 8px; background:var(--red); color:white; font-size:10px;" onclick="performKick('${item.target}'); delMsg(${idx})">APPROVE</button>
-                            <button class="btn" style="padding:2px 8px; background:#333; color:white; font-size:10px;" onclick="delMsg(${idx})">DENY</button>
-                        </div>
-                    </div>`;
+                    list.innerHTML += `<div class="inbox-item alert"><div style="color:var(--red); font-weight:bold">⚠️ Kick: ${item.target}</div><div style="color:#ccc">By ${item.from}: "${item.text}"</div><div class="req-actions"><button class="btn" style="padding:2px 8px; background:var(--red); color:white; font-size:10px;" onclick="performKick('${item.target}'); delMsg(${idx})">APPROVE</button><button class="btn" style="padding:2px 8px; background:#333; color:white; font-size:10px;" onclick="delMsg(${idx})">DENY</button></div></div>`;
                 }
             });
         }
-
-        function hireUser(name, msgIdx) {
+        function hireUser(name, idx) {
             const u = DB.users.find(x => x.name === name);
-            if(u) {
-                u.role = 'mod'; // Promote to Mod
-                saveDB();
-                delMsg(msgIdx);
-                alert(name + " promoted to Staff!");
-            }
+            if(u) { u.role = 'mod'; saveDB(); delMsg(idx); alert(name + " hired!"); }
         }
+        function delMsg(idx) { DB.inbox.splice(idx, 1); saveDB(); }
 
-        function delMsg(idx) {
-            DB.inbox.splice(idx, 1);
-            saveDB();
-        }
-
-        // --- 5. CHAT LOGIC ---
+        // --- CHAT ---
         function renderChat() {
             const g = document.getElementById('globalChat');
             const s = document.getElementById('staffChat');
             g.innerHTML = ''; s.innerHTML = '';
-
             DB.chat.forEach(m => {
                 let color = 'white';
                 if(m.role === 'owner') color = 'var(--gold)';
                 else if(m.role === 'commander') color = 'var(--orange)';
                 else if(m.role === 'mod') color = 'var(--green)';
-                
                 const html = `<div class="msg"><span style="color:${color}; font-weight:bold">${m.from}:</span> ${m.text}</div>`;
-                
-                if(m.channel === 'global') g.innerHTML += html;
-                else s.innerHTML += html;
+                if(m.channel === 'global') g.innerHTML += html; else s.innerHTML += html;
             });
         }
-
         function sendChat(e) {
             if(e.key === 'Enter') {
                 const txt = document.getElementById('chatInput').value;
                 if(!txt) return;
-                
-                // Determine active channel based on tab visibility
                 const isGlobal = document.getElementById('globalChat').style.display !== 'none';
-                DB.chat.push({
-                    channel: isGlobal ? 'global' : 'staff',
-                    from: session.user,
-                    role: session.role,
-                    text: txt
-                });
-                saveDB();
-                document.getElementById('chatInput').value = '';
-                
-                // Scroll to bottom
-                const box = isGlobal ? document.getElementById('globalChat') : document.getElementById('staffChat');
-                box.scrollTop = box.scrollHeight;
+                DB.chat.push({ channel: isGlobal?'global':'staff', from: session.user, role: session.role, text: txt });
+                saveDB(); document.getElementById('chatInput').value = '';
             }
         }
 
-        // --- 6. UI HELPERS ---
+        // --- UI UTILS ---
         function updateUI() {
             const loginBtn = document.getElementById('loginBtn');
             const logoutBtn = document.getElementById('logoutBtn');
+            const settingsBtn = document.getElementById('settingsBtn');
             const userDisp = document.getElementById('userDisplay');
             
             if(session.user) {
                 loginBtn.style.display = 'none';
                 logoutBtn.style.display = 'block';
+                settingsBtn.style.display = 'block'; // SHOW SETTINGS
                 document.getElementById('applyBtn').style.display = 'block';
                 
                 let color = 'white'; let prefix = '';
@@ -493,7 +478,6 @@
                 userDisp.style.display = 'inline-block';
                 userDisp.innerHTML = `<span style="color:${color}">${prefix}${session.user}</span>`;
 
-                // Role Buttons
                 if(['owner', 'commander', 'mod'].includes(session.role)) {
                     document.getElementById('staffBtn').style.display = 'block';
                     document.getElementById('staffTab').style.display = 'block';
@@ -505,45 +489,29 @@
             } else {
                 loginBtn.style.display = 'block';
                 logoutBtn.style.display = 'none';
+                settingsBtn.style.display = 'none';
                 userDisp.style.display = 'none';
             }
         }
 
-        // View Switching
         function switchView(v) {
             document.querySelectorAll('.view-section').forEach(e => e.classList.remove('active'));
             document.querySelectorAll('.menu-item').forEach(e => e.classList.remove('active'));
             if(v === 'portal') {
                 document.getElementById('portalView').classList.add('active');
                 document.querySelectorAll('.menu-item')[0].classList.add('active');
-            } else {
-                document.getElementById('adminView').classList.add('active');
-            }
+            } else document.getElementById('adminView').classList.add('active');
         }
 
-        let activeChat = 'global';
         function switchChat(c) {
-            document.getElementById('globalChat').style.display = c === 'global' ? 'block' : 'none';
-            document.getElementById('staffChat').style.display = c === 'staff' ? 'block' : 'none';
-            activeChat = c;
-            // Update Tab UI
-            const tabs = document.querySelectorAll('.tab');
-            tabs[0].classList.toggle('active', c === 'global');
-            tabs[1].classList.toggle('active', c === 'staff');
+            document.getElementById('globalChat').style.display = c==='global'?'block':'none';
+            document.getElementById('staffChat').style.display = c==='staff'?'block':'none';
+            document.querySelectorAll('.tab')[0].classList.toggle('active', c==='global');
+            document.querySelectorAll('.tab')[1].classList.toggle('active', c==='staff');
         }
 
-        function genCode() {
-            validCode = "ZOR-" + Math.floor(1000 + Math.random() * 9000);
-            document.getElementById('codeDisplay').innerText = validCode;
-        }
-
-        function runCodeKick() {
-            if(document.getElementById('kickCodeInput').value === validCode && validCode !== '') {
-                performKick(activeTarget);
-                validCode = ''; closeModal('codeModal');
-            } else alert("Invalid Code");
-        }
-
+        function genCode() { validCode = "ZOR-" + Math.floor(1000 + Math.random() * 9000); document.getElementById('codeDisplay').innerText = validCode; }
+        function runCodeKick() { if(document.getElementById('kickCodeInput').value === validCode && validCode !== '') { performKick(activeTarget); validCode = ''; closeModal('codeModal'); } else alert("Invalid Code"); }
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
     </script>
